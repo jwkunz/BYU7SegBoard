@@ -1,64 +1,154 @@
 /*
-  DSP.h - Library various DSP functions in C
+  timeClock.h - Keeps time as a state machine
   
-  Created by Jakob Kunzler December 25 2016
+  Created by Jakob Kunzler 07/04/2018
 */
 
-#ifndef DSP_h
-#define DSP_h
 
-#include <ArduinoStdInt.h>
+#include "ArduinoStdInt.h"
 #include "Arduino.h"
 
-#define vPI 3.14159265359
+#define SIXTYSECONDS 60
+#define SIXTYMINUTES 60
+#define TWENTYFOURHOURS 24
+#define TWELVEHOURS 12
+#define TIMESTRINGLENGTH 16
+#define ZERO_UNDERFLOW 0
+#define ONETHOUSAND_MS 1000
 
-// TYPES 
+struct timeClock{
+	uint16_t ticksPerSec;
+	uint16_t msPerTic;
+	uint16_t numTicks;
+	bool twelveHour_flag;  
+	uint16_t milliSeconds;
+	uint8_t seconds;
+	uint8_t minutes;
+	uint8_t hours;
+	char currentTime[TIMESTRINGLENGTH] = {'0','0',':','0','0',':','0','0','.','0','0','0',' ','A','M','\n'};
+	
+} TC;
 
-// Customize for application memmory needs
-// The ideal is double for these three, memmory allowing
-typedef double sample_t;
-typedef double mixer_t;
-typedef double tap_t;
+/* Init the clock
 
-// This is fine
-typedef uint16_t length_t;
+// tics per second: The number of times to call the tick function before one second passes
+// twelveHour_flag: 12 hour format = true, 24 hour format = false
+// seconds: Initial seconds, 0-59
+// minutes: Initial minutes, 0-59
+// hours: Initial hours in 24 hour format, 0-23
+*/
+void timeClock_init(uint16_t ticksPerSec,bool twelveHour_flag,uint8_t seconds,uint8_t minutes,uint8_t hours)
+{
+	TC.ticksPerSec = ticksPerSec;
+	TC.msPerTic = 1000/ticksPerSec;
+	TC.twelveHour_flag = twelveHour_flag;
+	TC.milliSeconds = 0;
+	TC.seconds = seconds;
+	TC.minutes = minutes;
+	TC.hours = hours;
+}
+
+// Call this function at a fixed rate to advance the clock forward
+
+void timeClock_tickFWD()
+{
+	TC.numTicks = TC.numTicks + 1;
+	// Milliseconds
+	TC.milliSeconds = TC.milliSeconds+TC.msPerTic;
+	
+	if (TC.numTicks >= TC.ticksPerSec)
+	{
+		// Reset
+		TC.numTicks = 0;
+		TC.milliSeconds = 0;
+		
+		// Advance Seconds
+		TC.seconds = TC.seconds + 1;
+		if (TC.seconds >= SIXTYSECONDS)
+		{
+			TC.seconds = 0;
+			// Advance Minutes
+			TC.minutes = TC.minutes + 1;
+			if (TC.minutes >= SIXTYMINUTES)
+			{
+				TC.minutes = 0;
+				// Advance Hours
+				TC.hours = TC.hours + 1;
+				if (TC.hours >= TWENTYFOURHOURS)
+				{
+					TC.hours = 0;
+				}						
+			}			
+		}
+	}
+}
+
+// Call this function at a fixed rate to advance the clock in reverse
+
+void timeClock_tickREV()
+{
+	TC.numTicks = TC.numTicks + 1;
+	// Milliseconds
+	TC.milliSeconds = TC.milliSeconds-TC.msPerTic;
+	
+	if (TC.numTicks >= TC.ticksPerSec)
+	{
+		// Reset
+		TC.numTicks = 0;
+		TC.milliSeconds = ONETHOUSAND_MS;
+		
+		// Advance Seconds (relies on underflow)
+		TC.seconds = TC.seconds - 1;
+		if (TC.seconds >= SIXTYSECONDS)
+		{
+			TC.seconds = SIXTYSECONDS-1;
+			// Advance Minutes (relies on underflow)
+			TC.minutes = TC.minutes - 1;
+			if (TC.minutes >= SIXTYMINUTES)
+			{
+				TC.minutes = SIXTYMINUTES-1;
+				// Advance Hours (relies on underflow)
+				TC.hours = TC.hours - 1;
+				if (TC.hours >= TWENTYFOURHOURS)
+				{
+					TC.hours = TWENTYFOURHOURS-1;
+				}						
+			}			
+		}
+	}
+}
 
 
-// The sinc function
-double dsp_sinc(double x);
 
-// Makes an inphase (I) mixer
-// The amplitude scaling is used to maximize the int storage
+// Update Current Time
+// By doing this only when called, it save resources
+_timeClock_updateTime()
+{
+	if (TC.twelveHour_flag) // 12 Hours
+	{
+		char mod = 'a';
+		if (TC.hours > TWELVEHOURS)
+			mod = 'p';
+		
+		sprintf(TC.currentTime,"%2u:%2u:%2u.%3u %cm",TC.hours,TC.minutes,TC.seconds,TC.milliSeconds,mod);
+	}
+	else // 24 Hour
+	{
+		sprintf(TC.currentTime,"%2u:%2u:%2u.%3u   ",TC.hours,TC.minutes,TC.seconds,TC.milliSeconds);
+	}	
+}
 
-void dsp_init_mixerI(double mixerOmega, mixer_t* mixerI, length_t windowLength, uint16_t amplitude);
+// Copies the current time into time
+// time is an array of chars, TIMESTRINGLENGTH long.
+timeClock_getTime(char* time)
+{
+	// Update Time
+	_timeClock_updateTime();
+	// Copy over
+	for (uint8_t m = 0; m < TIMESTRINGLENGTH; m++)
+	{
+		time[m] = TC.currentTime[m];
+	}
+}
 
-// Makes an quadrature (Q) mixer
-// The amplitude scaling is used to maximize the int storage
 
-void dsp_init_mixerQ(double mixerOmega, mixer_t* mixerQ, length_t windowLength, uint16_t amplitude);
-
-// Makes a low pass filter based on a sinc
-// The amplitude scaling is used to maximize the int storage
-
-void dsp_init_LPF_sinc(tap_t* taps, length_t numTaps, double cutOff_norm, uint16_t amplitude);
-
-// Performs a real only mix with the given mixer
-
-void dsp_realDownMix_window(sample_t* dataWindow, length_t windowLength, mixer_t* mixer, sample_t* downMixed);
-
-// Given I and Q mixer, single side band down mixes and returns complex I and Q results
-
-void dsp_complexDownMix_window(sample_t* dataWindow, length_t windowLength, mixer_t* mixerI, mixer_t* mixerQ, sample_t* downMixedI, sample_t* downMixedQ);
-
-// A slow but mathematically correct way of filtering IIR
-// Takes input data and gives output data
-
-void dsp_filterIIR(tap_t* B,tap_t* A,sample_t* inputData,length_t lengthA, length_t lengthB, length_t dataLength, sample_t* outputData);
-
-// Peforms a polyphase based decimation with the given anti-aliasing filter
-
-void dsp_polyphaseDecimate(sample_t* signal_OG, length_t signal_OG_length, tap_t* filterTaps, length_t filterTaps_length, uint8_t decimationFactor, sample_t* signal_dec, length_t signal_dec_length);
-
-double dsp_convert_dB(double x);
-
-#endif
