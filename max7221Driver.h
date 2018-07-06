@@ -73,17 +73,39 @@ uint8_t _MX_decodeChar(char d)
 #define MX_CHAR_2 0x6D
 #define MX_CHAR_3 0x79
 #define MX_CHAR_4 0x33
-#define MX_CHAR_5 0x30
 #define MX_CHAR_5 0x5B
-#define MX_CHAR_6 0x5F
+#define MX_CHAR_6 0x5F 
 #define MX_CHAR_7 0x70
 #define MX_CHAR_8 0x7F
-#define MX_CHAR_9 0x7B
+#define MX_CHAR_9 0x73
 #define MX_CHAR_DASH 0x01
+#define MX_CHAR_A 0x77
+#define MX_CHAR_B 0x7C
+#define MX_CHAR_C 0x39
+#define MX_CHAR_D 0x5E
 #define MX_CHAR_E 0x4F
-#define MX_CHAR_H 0x33
+#define MX_CHAR_F 0x47
+#define MX_CHAR_G 0x5E
+#define MX_CHAR_H 0x17
+#define MX_CHAR_I 0x06
+#define MX_CHAR_J 0x3C
+#define MX_CHAR_K 0x37
 #define MX_CHAR_L 0x0E
+#define MX_CHAR_M 0x54
+#define MX_CHAR_N 0x76
+#define MX_CHAR_O 0x1D
 #define MX_CHAR_P 0x67
+#define MX_CHAR_Q 0xFE
+#define MX_CHAR_R 0x66
+#define MX_CHAR_S 0x5B
+#define MX_CHAR_T 0x07
+#define MX_CHAR_U 0x3E
+#define MX_CHAR_V 0x1C
+#define MX_CHAR_W 0x2A
+#define MX_CHAR_w 0x2A
+#define MX_CHAR_X 0x37
+#define MX_CHAR_Y 0x3B
+#define MX_CHAR_Z 0x6D
 #define MX_CHAR_BLANK 0x00
 
 
@@ -133,20 +155,108 @@ uint8_t _MX_decodeChar(char d)
     return MX_CHAR_DASH;
     break;
 
+    case 'A':
+    return MX_CHAR_A;
+    break;
+    
+    case 'B':
+    return MX_CHAR_B;
+    break;
+
+    case 'C':
+    return MX_CHAR_C;
+    break;
+
+    case 'D':
+    return MX_CHAR_D;
+    break;
+
     case 'E':
     return MX_CHAR_E;
+    break;
+
+    case 'F':
+    return MX_CHAR_F;
+    break;
+
+    case 'G':
+    return MX_CHAR_G;
     break;
 
     case 'H':
     return MX_CHAR_H;
     break;
-    
+
+    case 'I':
+    return MX_CHAR_I;
+    break;
+
+    case 'J':
+    return MX_CHAR_J;
+    break;
+
+    case 'K':
+    return MX_CHAR_K;
+    break;
+
     case 'L':
     return MX_CHAR_L;
     break;
-    
+
+    case 'M':
+    return MX_CHAR_M;
+    break;
+
+    case 'N':
+    return MX_CHAR_N;
+    break;
+
+    case 'O':
+    return MX_CHAR_O;
+    break;
+
     case 'P':
     return MX_CHAR_P;
+    break;
+
+    case 'Q':
+    return MX_CHAR_Q;
+    break;
+
+    case 'R':
+    return MX_CHAR_R;
+    break;
+    
+    case 'S':
+    return MX_CHAR_S;
+    break;
+
+    case 'T':
+    return MX_CHAR_T;
+    break;
+    
+    case 'U':
+    return MX_CHAR_U;
+    break;
+    
+    case 'V':
+    return MX_CHAR_V;
+    break;
+
+    case 'W':
+    return MX_CHAR_W;
+    break;
+
+    case 'X':
+    return MX_CHAR_X;
+    break;
+    
+    case 'Y':
+    return MX_CHAR_Y;
+    break;
+    
+    case 'Z':
+    return MX_CHAR_Z;
     break;
     
     default:
@@ -172,7 +282,7 @@ uint8_t _MX_getBits(uint16_t data,uint8_t pos_end,int8_t pos_start)
   // Amount to shift left
   uint8_t left = MX_DATA_LEN-1-pos_end;
   // Amount to shift right
-  uint8_t right = MX_DATA_LEN-1-pos_start;
+  uint8_t right = MX_DATA_LEN-1-(pos_end-pos_start);
   // shift to exclude unwanted data
   data = data<<left;
   data = data>>right;
