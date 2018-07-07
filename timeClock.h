@@ -52,14 +52,19 @@ void timeClock_init(uint16_t ticksPerSec, bool twelveHour_flag, uint8_t seconds,
 
 // Call this function at a fixed rate to advance the clock forward
 
-void timeClock_tickFWD()
+bool timeClock_tickFWD()
 {
+  // Update flag
+  bool secUpdate = false;
+  // Update Ticks
   TC.numTicks = TC.numTicks + 1;
   // Milliseconds
   TC.milliSeconds = TC.milliSeconds + TC.msPerTic;
 
   if (TC.numTicks >= TC.ticksPerSec)
   {
+    // Update
+    secUpdate = true;
     // Reset
     TC.numTicks = 0;
     TC.milliSeconds = 0;
@@ -83,18 +88,24 @@ void timeClock_tickFWD()
       }
     }
   }
+  return secUpdate;
 }
 
 // Call this function at a fixed rate to advance the clock in reverse
 
 void timeClock_tickREV()
 {
+  // Update flag
+  bool secUpdate = false;
+  // Update count
   TC.numTicks = TC.numTicks + 1;
   // Milliseconds
   TC.milliSeconds = TC.milliSeconds - TC.msPerTic;
 
   if (TC.numTicks >= TC.ticksPerSec)
   {
+    // Update
+    secUpdate = true;
     // Reset
     TC.numTicks = 0;
     TC.milliSeconds = ONETHOUSAND_MS;
@@ -118,6 +129,7 @@ void timeClock_tickREV()
       }
     }
   }
+return secUpdate;
 }
 
 
