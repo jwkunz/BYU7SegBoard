@@ -1,0 +1,9 @@
+Added Component: Designator=POT1(3310R-001)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "3310R-125-103L-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/bourns-inc/3310R-125-103L/3310R-125-103L-ND/2537840"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "3310R-125-103L-ND"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetBZ1_2 Pin=POT1-2
+Added Pin To Net: NetName=GND Pin=POT1-3
+Added Member To Class: ClassName=U_Sound Member=Component POT1 3310R-125-103L

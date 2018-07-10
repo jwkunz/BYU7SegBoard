@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=Din Pin=RP1-1
+Removed Pin From Net: NetName=CLK Pin=RP1-2
+Removed Pin From Net: NetName=Dclk Pin=RP1-3
+Removed Pin From Net: NetName=7S_CS* Pin=RP1-4
+Added Pin To Net: NetName=7S_CS* Pin=RP1-1
+Added Pin To Net: NetName=Dclk Pin=RP1-2
+Added Pin To Net: NetName=CLK Pin=RP1-3
+Added Pin To Net: NetName=Din Pin=RP1-4
+Added Room: Name=U_Sound

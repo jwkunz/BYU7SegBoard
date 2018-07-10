@@ -1,0 +1,7 @@
+Added Member To Class: ClassName=U_7segments Member=Component LED1 LTL-4223
+Added Member To Class: ClassName=U_7segments Member=Component R2 MFR-25FBF52-9K53
+Added Room: Name=TopLevel
+Added Room: Name=U_7segments
+Added Room: Name=U_ArduinoNano
+Added Room: Name=U_ButtonAndSwitches
+Added Room: Name=U_Sound

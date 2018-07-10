@@ -1,0 +1,18 @@
+Added Pin To Net: NetName=3 Pin=Bz1-1A
+Added Pin To Net: NetName=3 Pin=Bz1-1
+Added Pin To Net: NetName=0 Pin=P4-1
+Added Pin To Net: NetName=1 Pin=P4-2
+Added Pin To Net: NetName=2 Pin=P4-3
+Added Pin To Net: NetName=3 Pin=P4-4
+Added Pin To Net: NetName=4 Pin=P4-5
+Added Pin To Net: NetName=5 Pin=P4-6
+Added Pin To Net: NetName=6 Pin=P4-7
+Added Pin To Net: NetName=7 Pin=P4-8
+Added Net: Name=D0
+Added Net: Name=D1
+Added Net: Name=D2
+Added Net: Name=D3
+Added Net: Name=D4
+Added Net: Name=D5
+Added Net: Name=D6
+Added Net: Name=D7

@@ -1,0 +1,28 @@
+Added Component: Designator=A1(ArduinoNano)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=GND Pin=A1-4
+Added Pin To Net: NetName=Din Pin=A1-5
+Added Pin To Net: NetName=CLK Pin=A1-6
+Added Pin To Net: NetName=Dclk Pin=A1-7
+Added Pin To Net: NetName=7S_CS* Pin=A1-8
+Added Pin To Net: NetName=Buzz Pin=A1-9
+Added Pin To Net: NetName=D7 Pin=A1-10
+Added Pin To Net: NetName=D8 Pin=A1-11
+Added Pin To Net: NetName=D9 Pin=A1-12
+Added Pin To Net: NetName=D10 Pin=A1-13
+Added Pin To Net: NetName=D11 Pin=A1-14
+Added Pin To Net: NetName=D12 Pin=A1-15
+Added Pin To Net: NetName=D13 Pin=A1-16
+Added Pin To Net: NetName=+3.3V Pin=A1-17
+Added Pin To Net: NetName=B0_o Pin=A1-19
+Added Pin To Net: NetName=B1_o Pin=A1-20
+Added Pin To Net: NetName=B2_o Pin=A1-21
+Added Pin To Net: NetName=B3_o Pin=A1-22
+Added Pin To Net: NetName=B4_o Pin=A1-23
+Added Pin To Net: NetName=B5_o Pin=A1-24
+Added Pin To Net: NetName=SW0_o Pin=A1-25
+Added Pin To Net: NetName=A7 Pin=A1-26
+Added Pin To Net: NetName=+5V Pin=A1-27
+Added Pin To Net: NetName=GND Pin=A1-29
+Added Pin To Net: NetName=+9V Pin=A1-30
+Added Member To Class: ClassName=U_ArduinoNano Member=Component A1 ArduinoNano

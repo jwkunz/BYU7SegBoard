@@ -1,0 +1,20 @@
+Removed Pin From Net: NetName=GND Pin=LED1-2
+Added Pin To Net: NetName=+9V Pin=BZ1-1
+Added Pin To Net: NetName=GND Pin=R1-2
+Added Pin To Net: NetName=+9V Pin=R4-1
+Added Pin To Net: NetName=Buzz Pin=R5-2
+Added Pin To Net: NetName=NetLED1_2 Pin=LED1-2
+Added Pin To Net: NetName=NetLED1_2 Pin=R1-1
+Added Net: Name=NetLED1_2
+Added Pin To Net: NetName=NetPOT1_2 Pin=POT1-2
+Added Pin To Net: NetName=NetPOT1_2 Pin=R6-1
+Added Net: Name=NetPOT1_2
+Added Pin To Net: NetName=NetQ1_1 Pin=Q1-1
+Added Pin To Net: NetName=NetQ1_1 Pin=R6-2
+Added Net: Name=NetQ1_1
+Added Pin To Net: NetName=NetQ1_2 Pin=Q1-2
+Added Pin To Net: NetName=NetQ1_2 Pin=R5-1
+Added Net: Name=NetQ1_2
+Added Pin To Net: NetName=NetR2_2 Pin=R2-2
+Added Pin To Net: NetName=NetR2_2 Pin=X1-18
+Added Net: Name=NetR2_2

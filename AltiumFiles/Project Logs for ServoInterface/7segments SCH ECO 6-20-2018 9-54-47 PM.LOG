@@ -1,0 +1,6 @@
+Replace Part D1 LED1 in J:\BrendonsBoard\7segments.SchDoc with LED1 from Miscellaneous Devices.IntLib
+Replace Part R1 Res1 in J:\BrendonsBoard\7segments.SchDoc with Res1 from Miscellaneous Devices.IntLib
+Replace Part R2 Res1 in J:\BrendonsBoard\7segments.SchDoc with Res1 from Miscellaneous Devices.IntLib
+Replace Part S1 SevenSegment in J:\BrendonsBoard\7segments.SchDoc with SevenSegment from BrendonsBoard.SchLib
+Replace Part S2 SevenSegment in J:\BrendonsBoard\7segments.SchDoc with SevenSegment from BrendonsBoard.SchLib
+Replace Part X1 MAX7221 in J:\BrendonsBoard\7segments.SchDoc with MAX7221 from BrendonsBoard.SchLib

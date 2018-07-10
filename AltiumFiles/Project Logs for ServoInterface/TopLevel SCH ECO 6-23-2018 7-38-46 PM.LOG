@@ -1,0 +1,4 @@
+Replace Part DC1 DCpowerBarrel in J:\BrendonsBoard\TopLevel.SchDoc with DCpowerBarrel from BrendonsBoard.SchLib
+Replace Part H1 Header 8 in J:\BrendonsBoard\TopLevel.SchDoc with Header 8 from Miscellaneous Connectors.IntLib
+Replace Part O1 SiT1534_32Hz in J:\BrendonsBoard\TopLevel.SchDoc with SiT1534_32Hz from BrendonsBoard.SchLib
+Replace Part RP1 ResistorPack15 in J:\BrendonsBoard\TopLevel.SchDoc with ResistorPack15 from BrendonsBoard.SchLib

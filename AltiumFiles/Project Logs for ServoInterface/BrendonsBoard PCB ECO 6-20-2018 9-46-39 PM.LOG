@@ -1,0 +1,10 @@
+Change Component Designator: OldDesignator=P? NewDesignator=P2
+Change Component Designator: OldDesignator=P? NewDesignator=P3
+Change Component Designator: OldDesignator=P? NewDesignator=P4
+Change Component Designator: OldDesignator=P? NewDesignator=P5
+Added Member To Class: ClassName=U_ArduinoHeaders Member=Component P3 Header 8
+Added Member To Class: ClassName=U_ArduinoHeaders Member=Component P4 Header 8
+Added Member To Class: ClassName=U_ArduinoHeaders Member=Component P5 Header 6
+Added Room: Name=U_7segments
+Added Room: Name=U_ArduinoHeaders
+Added Room: Name=U_Sound

@@ -1,0 +1,34 @@
+Change Component Comment : Designator=R1 Old Comment=330 New Comment=100
+Change component parameters: Designator = "R1"; Footprint = "Resistor Through Hole"; UniqueID = "\CSRXGALQ\MUEDMALV"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "ComponentLink1Description"; Value = "CF14JT100RCT-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/CF14JT100R/CF14JT100RCT-ND/1830327"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=SW0_o Pin=LED1-1
+Added Member To Class: ClassName=U_ArduinoNano Member=Component A1 DFR0010
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B0 GPTS203211B
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B1 GPTS203211B
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B2 GPTS203211B
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B3 GPTS203211B
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B4 GPTS203211B
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B5 GPTS203211B
+Added Member To Class: ClassName=U_Sound Member=Component BZ1 PS1240P02BT
+Added Member To Class: ClassName=TopLevel Member=Component DC1 PJ-037A
+Added Member To Class: ClassName=TopLevel Member=Component H1 68016-208HLF
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component LED1 LTL-4223
+Added Member To Class: ClassName=TopLevel Member=Component LED2 LTL-4223
+Added Member To Class: ClassName=TopLevel Member=Component O1 SIT1534AI-H4-DCC-00.032G
+Added Member To Class: ClassName=U_Sound Member=Component POT1 3310R-125-103L
+Added Member To Class: ClassName=TopLevel Member=Component PWRSW 200MSP1T1B1M2QEH
+Added Member To Class: ClassName=U_Sound Member=Component Q1 2N3904BU
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component R1 100
+Added Member To Class: ClassName=U_7segments Member=Component R2 9.53k
+Added Member To Class: ClassName=TopLevel Member=Component R3 1k
+Added Member To Class: ClassName=U_Sound Member=Component R4 1k
+Added Member To Class: ClassName=U_Sound Member=Component R5 100
+Added Member To Class: ClassName=U_Sound Member=Component R6 18
+Added Member To Class: ClassName=TopLevel Member=Component RP1 4116R-2-103LF
+Added Member To Class: ClassName=U_7segments Member=Component S1 LDQ-N516RI
+Added Member To Class: ClassName=U_7segments Member=Component S2 LDQ-N516RI
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component SW0 SLG12014
+Added Member To Class: ClassName=U_7segments Member=Component X1 MAX7221

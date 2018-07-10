@@ -1,0 +1,74 @@
+Added Component: Designator=O1(SiT1534_SMD)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "1473-1537-6-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/sitime/SIT1534AI-H4-DCC-00.032G/1473-1537-6-ND/6561097"; VariantName = "[No Variations]"
+Added Component: Designator=RP1(4100R)
+Add component. Clean all parameters for all variants
+Added Component: Designator=S1(LDQ-516RI)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "67-1450-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/products/en?keywords=LDQ-N516RI"; VariantName = "[No Variations]"
+Added Component: Designator=S2(LDQ-516RI)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "67-1450-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/products/en?keywords=LDQ-N516RI"; VariantName = "[No Variations]"
+Added Component: Designator=X1(MAX7221)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "MAX7221CWG+-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/maxim-integrated/MAX7221CWG/MAX7221CWG-ND/948194"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=5 Pin=RP1-3
+Added Pin To Net: NetName=6 Pin=RP1-4
+Added Pin To Net: NetName=GND Pin=RP1-16
+Added Pin To Net: NetName=E Pin=S1-1
+Added Pin To Net: NetName=D Pin=S1-2
+Added Pin To Net: NetName=Dp Pin=S1-3
+Added Pin To Net: NetName=C Pin=S1-4
+Added Pin To Net: NetName=G Pin=S1-5
+Added Pin To Net: NetName=D7 Pin=S1-6
+Added Pin To Net: NetName=B Pin=S1-7
+Added Pin To Net: NetName=D6 Pin=S1-8
+Added Pin To Net: NetName=D5 Pin=S1-9
+Added Pin To Net: NetName=F Pin=S1-10
+Added Pin To Net: NetName=A Pin=S1-11
+Added Pin To Net: NetName=D4 Pin=S1-12
+Added Pin To Net: NetName=E Pin=S2-1
+Added Pin To Net: NetName=D Pin=S2-2
+Added Pin To Net: NetName=Dp Pin=S2-3
+Added Pin To Net: NetName=C Pin=S2-4
+Added Pin To Net: NetName=G Pin=S2-5
+Added Pin To Net: NetName=D3 Pin=S2-6
+Added Pin To Net: NetName=B Pin=S2-7
+Added Pin To Net: NetName=D2 Pin=S2-8
+Added Pin To Net: NetName=D1 Pin=S2-9
+Added Pin To Net: NetName=F Pin=S2-10
+Added Pin To Net: NetName=A Pin=S2-11
+Added Pin To Net: NetName=D0 Pin=S2-12
+Added Pin To Net: NetName=4 Pin=X1-1
+Added Pin To Net: NetName=D0 Pin=X1-2
+Added Pin To Net: NetName=D4 Pin=X1-3
+Added Pin To Net: NetName=GND Pin=X1-4
+Added Pin To Net: NetName=D6 Pin=X1-5
+Added Pin To Net: NetName=D2 Pin=X1-6
+Added Pin To Net: NetName=D3 Pin=X1-7
+Added Pin To Net: NetName=D7 Pin=X1-8
+Added Pin To Net: NetName=GND Pin=X1-9
+Added Pin To Net: NetName=D5 Pin=X1-10
+Added Pin To Net: NetName=D1 Pin=X1-11
+Added Pin To Net: NetName=6 Pin=X1-12
+Added Pin To Net: NetName=5 Pin=X1-13
+Added Pin To Net: NetName=A Pin=X1-14
+Added Pin To Net: NetName=F Pin=X1-15
+Added Pin To Net: NetName=B Pin=X1-16
+Added Pin To Net: NetName=G Pin=X1-17
+Added Pin To Net: NetName=NetR1_1 Pin=X1-18
+Added Pin To Net: NetName=+5V Pin=X1-19
+Added Pin To Net: NetName=C Pin=X1-20
+Added Pin To Net: NetName=E Pin=X1-21
+Added Pin To Net: NetName=Dp Pin=X1-22
+Added Pin To Net: NetName=D Pin=X1-23
+Added Pin To Net: NetName=NetD1_1 Pin=X1-24
+Added Member To Class: ClassName=TopLevel Member=Component O1 SIT1534AI-H4-DCC-00.032G
+Added Member To Class: ClassName=TopLevel Member=Component RP1 4116R-2-103LF
+Added Member To Class: ClassName=U_7segments Member=Component S1 LDQ-N516RI
+Added Member To Class: ClassName=U_7segments Member=Component S2 LDQ-N516RI
+Added Member To Class: ClassName=U_7segments Member=Component X1 MAX7221

@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=3 Pin=Bz1-1A
+Removed Pin From Net: NetName=3 Pin=Bz1-1
+Removed Pin From Net: NetName=NetBz1_2 Pin=Bz1-2A
+Removed Pin From Net: NetName=NetBz1_2 Pin=Bz1-2
+Removed Member From Class: ClassName=U_Sound Member=Bz1
+Added Component: Designator=B*(PS1240P02BT)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "445-2525-1-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/tdk-corporation/PS1240P02BT/445-2525-1-ND/935930"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=3 Pin=B*-1
+Added Pin To Net: NetName=NetBz1_2 Pin=B*-2
+Change Net Name : Old Net Name=NetBz1_2 New Net Name=NetB*_2
+Added Member To Class: ClassName=U_Sound Member=Component B* PS1240P02BT

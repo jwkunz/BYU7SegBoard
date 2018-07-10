@@ -15,6 +15,7 @@
 
 struct interuptCatcher
 {
+// States
 #define IC_INIT_S 0
 #define IC_LOW_S 1
 #define IC_HIGH_S 2
@@ -22,7 +23,12 @@ struct interuptCatcher
   uint8_t currentState = IC_INIT_S;
   uint8_t pin = INTERUPTPIN;
   bool sig_out = false;
+
+  // Settings //
+
+  // Trigger on rising edge (true) or falling edge (false)
   bool riseEdge_flag = true;
+  // Trigger on both edges
   bool doubleEdge_flag = false;
 } IC;
 

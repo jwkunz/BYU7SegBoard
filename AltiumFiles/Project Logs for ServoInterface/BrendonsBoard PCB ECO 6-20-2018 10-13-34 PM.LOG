@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=5 Pin=RP1-3
+Removed Pin From Net: NetName=6 Pin=RP1-4
+Removed Pin From Net: NetName=GND Pin=RP1-16
+Removed Member From Class: ClassName=TopLevel Member=RP1
+Added Component: Designator=RP?(4100R)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=5 Pin=RP?-3
+Added Pin To Net: NetName=6 Pin=RP?-4
+Added Pin To Net: NetName=GND Pin=RP?-16
+Added Member To Class: ClassName=TopLevel Member=Component RP? 4116R-2-103LF

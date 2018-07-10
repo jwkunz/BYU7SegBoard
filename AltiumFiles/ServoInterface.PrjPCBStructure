@@ -1,0 +1,5 @@
+Record=TopLevelDocument|FileName=TopLevel.SchDoc
+Record=SheetSymbol|SourceDocument=TopLevel.SchDoc|Designator=U_7segments|SchDesignator=U_7segments|FileName=7segments.SchDoc|SymbolType=Normal|RawFileName=7segments.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=TopLevel.SchDoc|Designator=U_ArduinoNano|SchDesignator=U_ArduinoNano|FileName=ArduinoNano.SchDoc|SymbolType=Normal|RawFileName=ArduinoNano.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=TopLevel.SchDoc|Designator=U_ButtonAndSwitches|SchDesignator=U_ButtonAndSwitches|FileName=ButtonAndSwitches.SchDoc|SymbolType=Normal|RawFileName=ButtonAndSwitches.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=TopLevel.SchDoc|Designator=U_Sound|SchDesignator=U_Sound|FileName=Sound.SchDoc|SymbolType=Normal|RawFileName=Sound.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
