@@ -1,0 +1,35 @@
+Removed Pin From Net: NetName=CLK Pin=A1-6
+Added Component: Designator=H1(Header1X10)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "609-3322-ND"; VariantName = "[No Variations]"
+Added Component: Designator=R2(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "9.53KXBK-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/yageo/MFR-25FBF52-9K53/9.53KXBK-ND/13215"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=R4(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "CF14JT1K00TR-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/CF14JT1K00/CF14JT1K00TR-ND/1741314"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=H1-1
+Added Pin To Net: NetName=D7 Pin=H1-3
+Added Pin To Net: NetName=D8 Pin=H1-4
+Added Pin To Net: NetName=D9 Pin=H1-5
+Added Pin To Net: NetName=D10 Pin=H1-6
+Added Pin To Net: NetName=D11 Pin=H1-7
+Added Pin To Net: NetName=D12 Pin=H1-8
+Added Pin To Net: NetName=D13 Pin=H1-9
+Added Pin To Net: NetName=A7 Pin=H1-10
+Added Pin To Net: NetName=NetR2_1 Pin=R2-1
+Added Pin To Net: NetName=+5V Pin=R2-2
+Added Pin To Net: NetName=+9V Pin=R4-1
+Added Pin To Net: NetName=NetBZ1_2 Pin=R4-2
+Change Net Name : Old Net Name=Dclk New Net Name=D3
+Added Member To Class: ClassName=TopLevel Member=Component H1 68016-210HLF
+Added Member To Class: ClassName=U_7segments Member=Component R2 9.53k
+Added Member To Class: ClassName=U_Sound Member=Component R4 1k

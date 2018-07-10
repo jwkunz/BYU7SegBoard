@@ -1,0 +1,151 @@
+Change Component DesignItemId : Designator=Q1 Old DesignItemId= New DesignItemId=2N3904
+Change Component DesignItemId : Designator=DC1 Old DesignItemId= New DesignItemId=DCpowerBarrel
+Change Component DesignItemId : Designator=X1 Old DesignItemId= New DesignItemId=MAX7219
+Change Component DesignItemId : Designator=POT1 Old DesignItemId= New DesignItemId=Potentiometer - 10k
+Change Component DesignItemId : Designator=PWRSW Old DesignItemId= New DesignItemId=PowerSwitch
+Change Component DesignItemId : Designator=B0 Old DesignItemId= New DesignItemId=Push Button
+Change Component DesignItemId : Designator=B1 Old DesignItemId= New DesignItemId=Push Button
+Change Component DesignItemId : Designator=B2 Old DesignItemId= New DesignItemId=Push Button
+Change Component DesignItemId : Designator=B3 Old DesignItemId= New DesignItemId=Push Button
+Change Component DesignItemId : Designator=B4 Old DesignItemId= New DesignItemId=Push Button
+Change Component DesignItemId : Designator=B5 Old DesignItemId= New DesignItemId=Push Button
+Change Component DesignItemId : Designator=RP1 Old DesignItemId= New DesignItemId=ResistorPack15
+Change Component DesignItemId : Designator=A1 Old DesignItemId=ArduinoNano New DesignItemId=
+Change Component Footprint: Designator=X1 Old Footprint=MAX7221 New Footprint=MAX7219
+Change Component Comment : Designator=X1 Old Comment=MAX7221 New Comment=MAX7219CNG+
+Change Component Library : Designator=A1 Old Library=BrendonsBoard.SchLib New Library=ServoInterface.SchLib
+Change component parameters: Designator = "X1"; Footprint = "MAX7219"; UniqueID = "\YTTBEDBM\JJTIVXJG"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "ComponentLink1Description"; Value = "MAX7219CNG+-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/maxim-integrated/MAX7219CNG/MAX7219CNG-ND/948191"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "MAX7219CNG+-ND"; VariantName = "[No Variations]"
+Added Component: Designator=H1(Header1X10)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "609-3322-ND"; VariantName = "[No Variations]"
+Added Component: Designator=LED1(LED Through)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "160-1127-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/lite-on-inc/LTL-4223/160-1127-ND/200395"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=LED2(LED Through)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "160-1127-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/lite-on-inc/LTL-4223/160-1127-ND/200395"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=R1(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "CF14JT100RCT-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/CF14JT100R/CF14JT100RCT-ND/1830327"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=R2(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "9.53KXBK-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/yageo/MFR-25FBF52-9K53/9.53KXBK-ND/13215"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=R3(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "CF14JT1K00TR-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/CF14JT1K00/CF14JT1K00TR-ND/1741314"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=R4(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "CF14JT1K00TR-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/CF14JT1K00/CF14JT1K00TR-ND/1741314"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=R5(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "CF14JT100RCT-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/stackpole-electronics-inc/CF14JT100R/CF14JT100RCT-ND/1830327"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=R6(Resistor Through Hole)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Added Component: Designator=S1(LDQ-516RI)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "67-1450-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/products/en?keywords=LDQ-N516RI"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "67-1450-ND"; VariantName = "[No Variations]"
+Added Component: Designator=S2(LDQ-516RI)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "67-1450-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/products/en?keywords=LDQ-N516RI"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "67-1450-ND"; VariantName = "[No Variations]"
+Added Component: Designator=SW0(SLG12014)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "679-3535-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.digikey.com/product-detail/en/apem-inc/SLG12014/679-3535-ND/1797348"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "679-3535-ND"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=H1-1
+Added Pin To Net: NetName=D7 Pin=H1-3
+Added Pin To Net: NetName=D8 Pin=H1-4
+Added Pin To Net: NetName=D9 Pin=H1-5
+Added Pin To Net: NetName=D10 Pin=H1-6
+Added Pin To Net: NetName=D11 Pin=H1-7
+Added Pin To Net: NetName=D12 Pin=H1-8
+Added Pin To Net: NetName=D13 Pin=H1-9
+Added Pin To Net: NetName=A7 Pin=H1-10
+Added Pin To Net: NetName=SW0_o Pin=LED1-1
+Added Pin To Net: NetName=NetLED1_2 Pin=LED1-2
+Added Pin To Net: NetName=+9V Pin=LED2-1
+Added Pin To Net: NetName=NetLED1_2 Pin=R1-1
+Added Pin To Net: NetName=GND Pin=R1-2
+Added Pin To Net: NetName=NetR2_1 Pin=R2-1
+Added Pin To Net: NetName=+5V Pin=R2-2
+Added Pin To Net: NetName=GND Pin=R3-2
+Added Pin To Net: NetName=+9V Pin=R4-1
+Added Pin To Net: NetName=NetBZ1_2 Pin=R4-2
+Added Pin To Net: NetName=NetQ1_2 Pin=R5-1
+Added Pin To Net: NetName=Buzz Pin=R5-2
+Added Pin To Net: NetName=NetPOT1_2 Pin=R6-1
+Added Pin To Net: NetName=NetQ1_1 Pin=R6-2
+Added Pin To Net: NetName=E Pin=S1-1
+Added Pin To Net: NetName=D Pin=S1-2
+Added Pin To Net: NetName=Dp Pin=S1-3
+Added Pin To Net: NetName=C Pin=S1-4
+Added Pin To Net: NetName=G Pin=S1-5
+Added Pin To Net: NetName=Digit7 Pin=S1-6
+Added Pin To Net: NetName=B Pin=S1-7
+Added Pin To Net: NetName=Digit6 Pin=S1-8
+Added Pin To Net: NetName=Digit5 Pin=S1-9
+Added Pin To Net: NetName=F Pin=S1-10
+Added Pin To Net: NetName=A Pin=S1-11
+Added Pin To Net: NetName=Digit4 Pin=S1-12
+Added Pin To Net: NetName=E Pin=S2-1
+Added Pin To Net: NetName=D Pin=S2-2
+Added Pin To Net: NetName=Dp Pin=S2-3
+Added Pin To Net: NetName=C Pin=S2-4
+Added Pin To Net: NetName=G Pin=S2-5
+Added Pin To Net: NetName=Digit3 Pin=S2-6
+Added Pin To Net: NetName=B Pin=S2-7
+Added Pin To Net: NetName=Digit2 Pin=S2-8
+Added Pin To Net: NetName=Digit1 Pin=S2-9
+Added Pin To Net: NetName=F Pin=S2-10
+Added Pin To Net: NetName=A Pin=S2-11
+Added Pin To Net: NetName=Digit0 Pin=S2-12
+Added Pin To Net: NetName=GND Pin=SW0-1
+Added Pin To Net: NetName=+3.3V Pin=SW0-2
+Added Pin To Net: NetName=SW0_o Pin=SW0-3
+Change Net Name : Old Net Name=D3 New Net Name=Dclk
+Added Pin To Net: NetName=D3 Pin=A1-6
+Added Pin To Net: NetName=D3 Pin=H1-2
+Added Net: Name=D3
+Added Member To Class: ClassName=TopLevel Member=Component H1 68016-210HLF
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component LED1 LTL-4223
+Added Member To Class: ClassName=TopLevel Member=Component LED2 LTL-4223
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component R1 100
+Added Member To Class: ClassName=U_7segments Member=Component R2 9.53k
+Added Member To Class: ClassName=TopLevel Member=Component R3 1k
+Added Member To Class: ClassName=U_Sound Member=Component R4 1k
+Added Member To Class: ClassName=U_Sound Member=Component R5 100
+Added Member To Class: ClassName=U_Sound Member=Component R6 18
+Added Member To Class: ClassName=U_7segments Member=Component S1 LDQ-N516RI
+Added Member To Class: ClassName=U_7segments Member=Component S2 LDQ-N516RI
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component SW0 SLG12014
