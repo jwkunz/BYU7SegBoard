@@ -93,7 +93,7 @@ bool timeClock_tickFWD()
 
 // Call this function at a fixed rate to advance the clock in reverse
 
-void timeClock_tickREV()
+bool timeClock_tickREV()
 {
   // Update flag
   bool secUpdate = false;
@@ -136,7 +136,7 @@ return secUpdate;
 
 // Update Current Time
 // By doing this only when called, it save resources
-_timeClock_updateTime()
+void _timeClock_updateTime()
 {
   if (TC.twelveHour_flag) // 12 Hours
   {
@@ -154,7 +154,7 @@ _timeClock_updateTime()
 
 // Copies the current time into time
 // time is an array of chars, TIMESTRINGLENGTH long.
-timeClock_getTime(char* timeString)
+void timeClock_getTime(char* timeString)
 {
   // Update Time
   _timeClock_updateTime();

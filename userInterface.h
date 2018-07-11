@@ -1,10 +1,9 @@
-#ifndef userInterface.h
-#define userInterface.h
+#ifndef userInterface_h
+#define userInterface_h
 
 // Includes
 #include "buttonHandler.h"
 #include "timeClock.h"
-#include "interuptCatcher.h"
 #include "max7221Driver.h"
 #include "buttonHandler.h"
 

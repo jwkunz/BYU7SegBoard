@@ -1,15 +1,25 @@
-#include "interuptCatcher.h"
+#include "interupts.h"
 #include "timeClock.h"
 #include "userInterface.h"
 
 void setup() {
+  interupts_init();
+  Serial.begin(9600);
+  Serial.println("Preload:");
+  Serial.println(INTERUPTS_LOAD);
 }
 
 uint64_t tickCount = 0;
+uint32_t lastTime = 0;
+uint32_t elapsedTime = 0;
+uint32_t timeMark = 0;
 
 void loop() {
-  // Wait for interupt
-  while(!interuptCatcher_check4Interupt())
+
+}
+
+void mainISR()
+{
   // Counter
   tickCount++;
   // Tick Clock
@@ -17,8 +27,5 @@ void loop() {
   // Tick the User Interface
   ui_tick();
 }
-
-
-
 
 

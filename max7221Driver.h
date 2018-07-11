@@ -45,7 +45,7 @@
 #define MX_DATA_CODEB_CHAR_7 0x07
 #define MX_DATA_CODEB_CHAR_8 0x08
 #define MX_DATA_CODEB_CHAR_9 0x09
-#define MX_DATA_CODEB_CHAR_- 0x0A
+#define MX_DATA_CODEB_CHAR_DASH 0x0A
 #define MX_DATA_CODEB_CHAR_E 0x0B
 #define MX_DATA_CODEB_CHAR_H 0x0C
 #define MX_DATA_CODEB_CHAR_L 0x0D
@@ -57,7 +57,7 @@
 #define MX_MASK_DP 0x80
 
 #define MX_STARTUP_LENGTH 9
-const char MX_STARTUP[MX_STARTUP_LENGTH] = {'1','2','3','4','.','A','B','C','D'};
+char MX_STARTUP[MX_STARTUP_LENGTH] = {'1','2','3','4','.','A','B','C','D'};
 
 // Forms a data stream from an address and the data
 uint16_t _MX_formCode(uint8_t address,uint8_t data)
