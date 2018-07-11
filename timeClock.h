@@ -27,7 +27,7 @@ struct timeClock {
   uint8_t seconds;
   uint8_t minutes;
   uint8_t hours;
-  char currentTime[TIMESTRINGLENGTH] = {'0', '0', '.', '0', '0', '.', '0', '0', '.', '0', '0', '0', ' ', 'A', 'M', '\n'};
+  char currentTime[TIMESTRINGLENGTH];
 
 } TC;
 
@@ -132,6 +132,31 @@ bool timeClock_tickREV()
 return secUpdate;
 }
 
+uint8_t timeClock_convert24hr_2_12hr(uint8_t hour)
+{
+  if(hour == 0)
+  {
+    return 12;
+  }
+  if(hour > TWELVEHOURS)
+  {
+    return hour-TWELVEHOURS;
+  }
+  return hour;
+}
+
+char timeClock_AM_or_PM(uint8_t hour)
+{
+  if(hour == 0)
+  {
+    return 'A';
+  }
+  if(hour >= TWELVEHOURS)
+  {
+    return 'P';
+  }
+  return 'A';
+}
 
 
 // Update Current Time
@@ -140,15 +165,11 @@ void _timeClock_updateTime()
 {
   if (TC.twelveHour_flag) // 12 Hours
   {
-    char mod = 'a';
-    if (TC.hours > TWELVEHOURS)
-      mod = 'p';
-
-    sprintf(TC.currentTime, "%2u:%2u:%2u.%3u %cm", TC.hours, TC.minutes, TC.seconds, TC.milliSeconds, mod);
+    sprintf(TC.currentTime, "%02u:%02u:%02u.%03u %cm", timeClock_convert24hr_2_12hr(TC.hours), TC.minutes, TC.seconds, TC.milliSeconds, timeClock_AM_or_PM(TC.hours));
   }
   else // 24 Hour
   {
-    sprintf(TC.currentTime, "%2u:%2u:%2u.%3u   ", TC.hours, TC.minutes, TC.seconds, TC.milliSeconds);
+    sprintf(TC.currentTime, "%02u:%02u:%02u.%03u   ", TC.hours, TC.minutes, TC.seconds, TC.milliSeconds);
   }
 }
 

@@ -8,13 +8,16 @@
 #include "buttonHandler.h"
 
 // General Parameters
-#define INTERUPTS_PER_SECOND 32
+#define INTERUPTS_PER_SECOND (1/INTERUPT_PERIOD_S)
 #define DISP_STRING_LEN 10
 
 // Clock Start Parameters
-#define START_HOURS 12
-#define START_MIN 0
-#define START_SEC 0
+#define START_HOURS 7
+#define START_MIN 28
+#define START_SEC 40
+volatile bool twelveHourClk_flag = true;
+volatile bool soundAlarm_flag = false;
+
 
 // States
 #define UI_INIT_S 0
@@ -33,12 +36,10 @@
 #define SW0_MASK 0x40
 
 // State Timing
-#define DISP_UPDATE_TICKS 16
+#define DISP_UPDATE_TICKS (INTERUPTS_PER_SECOND)
 
-volatile bool twelveHourClk_flag = false;
-volatile bool soundAlarm_flag = false;
 
-uint16_t ui_idle_s_ctr = 0;
+uint16_t ui_updateDisp_ctr = 0;
 
 uint8_t ui_currentState = UI_INIT_S;
 
@@ -52,6 +53,18 @@ void ui_storeDispTime(char* disp_time)
   for(uint8_t m=0; m<DISP_STRING_LEN; m++)
     timeOnDisplay[m]=disp_time[m];
 }
+
+
+// A debug print
+void ui_printDisp(char* dispString)
+{
+  for(uint8_t m = 0; m < DISP_STRING_LEN; m++)
+  {
+    Serial.print(dispString[m]);
+  }
+  Serial.println(" ");
+}
+
 
 // Updates the display
 void ui_updateDisplay()
@@ -74,15 +87,18 @@ void ui_updateDisplay()
 
     // Check Format from switch
     if (twelveHourClk_flag) // High =  12 hour
-      dispString[9] = timeString[14]; 
+      dispString[9] = timeString[13]; 
     else // Low = 24 hour
       dispString[9] = ' ';
       
     // Print Text to Seven Segment
     MX_disp_string(dispString,DISP_STRING_LEN);
     // Store Time
-    ui_storeDispTime(dispString);  
+    ui_storeDispTime(dispString);
+    ui_printDisp(dispString);
 }
+
+
 
 // Checks if the alarm should go
 bool ui_checkForAlarmTrigger()
@@ -92,10 +108,10 @@ bool ui_checkForAlarmTrigger()
   {
     if(timeOnDisplay[m]!=alarmTime[m])
       {
-        return true;
+        return false;
       }
   }
-  return false;
+  return true;
 }
 
 
@@ -113,7 +129,7 @@ void ui_tick()
     timeClock_init(INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC, START_MIN, START_HOURS);
     MX_init();
     BH_initAll();
-		ui_idle_s_ctr = 0;
+		ui_updateDisp_ctr = 0;
 		// Advance //
 		ui_currentState = UI_IDLE_S;
 		break;
@@ -122,9 +138,10 @@ void ui_tick()
     // Waiting state
 		case(UI_IDLE_S):
 		// Action //
-		ui_idle_s_ctr++;
-		// Advance //
+		ui_updateDisp_ctr++;
 
+		// Advance //
+      
     if (ui_checkForAlarmTrigger())
     {
       ui_currentState = UI_START_ALARM_S;
@@ -132,9 +149,11 @@ void ui_tick()
     }
     
     // Update Display after so many ticks
-		if (ui_idle_s_ctr >= DISP_UPDATE_TICKS)
+		if (ui_updateDisp_ctr >= DISP_UPDATE_TICKS)
 		{
-			ui_currentState = UI_UPDATE_DISP_S;
+			ui_currentState = UI_IDLE_S;
+      ui_updateDisplay();
+      ui_updateDisp_ctr = 0;
       break;
 		}
 		break;
@@ -169,15 +188,7 @@ void ui_tick()
       ui_currentState = UI_IDLE_S;     
     break;
 
-    /////////////////
-		// Update Display
-		case(UI_UPDATE_DISP_S):
-		// Action
-		ui_updateDisplay();		
-		// Advance
-		ui_currentState = UI_IDLE_S;		
-		break;
-		
+   		
 		///////
 		default:
 		ui_currentState = UI_INIT_S;

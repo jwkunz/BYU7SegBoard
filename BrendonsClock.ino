@@ -5,8 +5,6 @@
 void setup() {
   interupts_init();
   Serial.begin(9600);
-  Serial.println("Preload:");
-  Serial.println(INTERUPTS_LOAD);
 }
 
 uint64_t tickCount = 0;
@@ -26,6 +24,19 @@ void mainISR()
   timeClock_tickFWD();
   // Tick the User Interface
   ui_tick();
+  //printTime();
+  //ui_updateDisplay();
 }
 
+
+void printTime()
+{
+  char dispString[TIMESTRINGLENGTH] = {0};
+  timeClock_getTime(dispString);
+  for(uint8_t m = 0; m < TIMESTRINGLENGTH; m++)
+  {
+    Serial.print(dispString[m]);
+  }
+  Serial.println(" ");
+}
 
