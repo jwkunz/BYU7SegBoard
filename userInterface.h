@@ -12,9 +12,9 @@
 #define DISP_STRING_LEN 10
 
 // Clock Start Parameters
-#define START_HOURS 7
-#define START_MIN 28
-#define START_SEC 40
+#define START_HOURS 10
+#define START_MIN 40
+#define START_SEC 15
 volatile bool twelveHourClk_flag = true;
 volatile bool soundAlarm_flag = false;
 
@@ -90,11 +90,15 @@ void ui_updateDisplay()
       dispString[9] = timeString[13]; 
     else // Low = 24 hour
       dispString[9] = ' ';
-      
+
+    
     // Print Text to Seven Segment
     MX_disp_string(dispString,DISP_STRING_LEN);
     // Store Time
     ui_storeDispTime(dispString);
+    
+    
+    // DEBUG, Print time
     ui_printDisp(dispString);
 }
 

@@ -9,12 +9,16 @@
 
 #include "ArduinoStdInt.h"
 
-#define CS_PIN 5
-#define DATA_CLK_PIN 6
-#define DATA_OUT_PIN 7
+// PINS
+#define PIN_CS 5
+#define PIN_DATA_CLK 4
+#define PIN_DATA_IN 2
+
+// Parameters
 #define MX_DATA_LEN 16
 #define MX_NO_SEGS 8
 
+// ADDRESS CODES:
 #define MX_ADDR_NO_OPT 0x0
 
 #define MX_ADDR_INTENSITY 0x0A
@@ -56,8 +60,10 @@
 
 #define MX_MASK_DP 0x80
 
+// Start Up
 #define MX_STARTUP_LENGTH 9
 char MX_STARTUP[MX_STARTUP_LENGTH] = {'1','2','3','4','.','A','B','C','D'};
+
 
 // Forms a data stream from an address and the data
 uint16_t _MX_formCode(uint8_t address,uint8_t data)
@@ -300,16 +306,21 @@ uint8_t _MX_getBits(uint16_t data,uint8_t pos_end,int8_t pos_start)
  */
 void _MX_SendData(uint16_t data)
 {
-  digitalWrite(DATA_CLK_PIN,LOW);
-  digitalWrite(CS_PIN,LOW);
+  Serial.println("Starting Sending Data...");
+  digitalWrite(PIN_DATA_CLK,LOW);
+  digitalWrite(PIN_CS,LOW);
   for (uint8_t m = 0; m < MX_DATA_LEN; m++)
   {
     uint8_t p = MX_DATA_LEN-1-m;
-    digitalWrite(DATA_OUT_PIN,_MX_getBits(data,p,p));
-    digitalWrite(DATA_CLK_PIN,HIGH);
-    digitalWrite(DATA_CLK_PIN,LOW);
+    uint8_t b = _MX_getBits(data,p,p);
+    Serial.print(b);
+    digitalWrite(PIN_DATA_IN,b);
+    digitalWrite(PIN_DATA_CLK,HIGH);
+    digitalWrite(PIN_DATA_CLK,LOW);
+    delay(500);
   }
-  digitalWrite(CS_PIN,HIGH);
+  digitalWrite(PIN_CS,HIGH);
+  Serial.println("\nData Sent");
 }
 
 
@@ -339,6 +350,12 @@ void MX_setNoSegments(uint8_t numSegs)
 void MX_noDecode()
 {
   _MX_SendData(_MX_formCode(MX_ADDR_DECODE_MODE,MX_DATA_NO_DECODE));  
+}
+
+// Run display test
+void MX_dispTest()
+{
+  _MX_SendData(_MX_formCode(MX_ADDR_DISPTEST,MX_DATA_DISPTEST_MODE));  
 }
 
 // Displays the chars in the string on the screen. Handles decimal point
@@ -371,11 +388,16 @@ void MX_disp_string(char* text,uint8_t textLength)
 // Init Settings
 void MX_init()
 {
+  Serial.println("Initing MX...");
+  MX_dispTest();
+  /*
   MX_noDecode();
   MX_setNoSegments(MX_NO_SEGS-1);
   MX_setBrightness(MX_MAX_BRIGHT);
   MX_disp_string(MX_STARTUP,MX_STARTUP_LENGTH);
   MX_powerSwitch(true);
+  */
+  Serial.println("MX inited");
 }
 
 #endif
