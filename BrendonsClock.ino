@@ -6,8 +6,11 @@
 
 
 void setup() {
-  interupts_init();
   Serial.begin(9600);
+  Serial.println("Booted");
+  BH_initAll();
+  MX_init();
+  interupts_init();
 }
 
 uint64_t tickCount = 0;
@@ -17,26 +20,29 @@ uint32_t timeMark = 0;
 
 void loop() {
 
-  uint16_t data = 0;
-  if (BH_getAnIO('B',0))
+  if (BH_getAnIO('B',5))
   {
-
-    data = _MX_formCode(MX_ADDR_SHUTDOWN,MX_DATA_ON);
-    Serial.println(data, BIN);
-    _MX_SendData(data);
-    delay(2000);
-
-    data = _MX_formCode(MX_ADDR_DISPTEST,MX_DATA_DISPTEST_MODE);
-    Serial.println(data, BIN);
-    _MX_SendData(data);
-    delay(2000);
+    Serial.println("Sent ON");
+    MX_powerSwitch(true);
+    delay(100);
+  }
+  
+  if (BH_getAnIO('B',4))
+  {
+    Serial.println("Sent OFF");
+    MX_powerSwitch(false);
+    delay(100);
   }
 
+  if (BH_getAnIO('S',0))
+    MX_dispTest(true);
+  else
+    MX_dispTest(false);
 }
 
 void mainISR()
 {
-  /*
+  
   // Counter
   tickCount++;
   // Tick Clock
@@ -45,7 +51,7 @@ void mainISR()
   ui_tick();
   //printTime();
   //ui_updateDisplay();
-  */
+  
 }
 
 

@@ -6,7 +6,7 @@
 */
 
 // User Parameter 
-#define INTERUPT_PERIOD_S (1)
+#define INTERUPT_PERIOD_S (500E-3)
 #define INTERUPT_TUNEFACTOR (-128) // Empiracally set for 1 second ticks
 // -128 is barely too fast. -256 is really slow.
 

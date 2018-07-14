@@ -131,8 +131,6 @@ void ui_tick()
 		case(UI_INIT_S):
 		// Action //
     timeClock_init(INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC, START_MIN, START_HOURS);
-    MX_init();
-    BH_initAll();
 		ui_updateDisp_ctr = 0;
 		// Advance //
 		ui_currentState = UI_IDLE_S;
