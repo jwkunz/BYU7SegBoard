@@ -12,6 +12,8 @@
 
 #define SIXTYSECONDS 60
 #define SIXTYMINUTES 60
+#define MAX_UINT8 255
+#define MAX_UINT16 65535
 #define TWENTYFOURHOURS 24
 #define TWELVEHOURS 12
 #define TIMESTRINGLENGTH 16
@@ -19,14 +21,11 @@
 #define ONETHOUSAND_MS 1000
 
 struct timeClock {
-  uint16_t ticksPerSec;
-  uint16_t msPerTic;
-  uint16_t numTicks;
   bool twelveHour_flag;
-  uint16_t milliSeconds;
-  uint8_t seconds;
-  uint8_t minutes;
-  uint8_t hours;
+  int16_t milliSeconds;
+  int8_t seconds;
+  int8_t minutes;
+  int8_t hours;
   char currentTime[TIMESTRINGLENGTH];
 
 } TC;
@@ -41,8 +40,6 @@ struct timeClock {
 */
 void timeClock_init(uint16_t ticksPerSec, bool twelveHour_flag, uint8_t seconds, uint8_t minutes, uint8_t hours)
 {
-  TC.ticksPerSec = ticksPerSec;
-  TC.msPerTic = 1000 / ticksPerSec;
   TC.twelveHour_flag = twelveHour_flag;
   TC.milliSeconds = 0;
   TC.seconds = seconds;
@@ -50,86 +47,70 @@ void timeClock_init(uint16_t ticksPerSec, bool twelveHour_flag, uint8_t seconds,
   TC.hours = hours;
 }
 
-// Call this function at a fixed rate to advance the clock forward
-
-bool timeClock_tickFWD()
-{
-  // Update flag
-  bool secUpdate = false;
-  // Update Ticks
-  TC.numTicks = TC.numTicks + 1;
-  // Milliseconds
-  TC.milliSeconds = TC.milliSeconds + TC.msPerTic;
-
-  if (TC.numTicks >= TC.ticksPerSec)
+// Moves clock forward the given amount
+void timeClock_tickFWD(uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
+{ 
+  // Advance Milliseconds
+  TC.milliSeconds = TC.milliSeconds + numMilSecs;
+  if (TC.milliSeconds >= ONETHOUSAND_MS)
   {
-    // Update
-    secUpdate = true;
-    // Reset
-    TC.numTicks = 0;
-    TC.milliSeconds = 0;
-
+    // Roll Over
+    TC.milliSeconds = TC.milliSeconds%ONETHOUSAND_MS;
     // Advance Seconds
-    TC.seconds = TC.seconds + 1;
+    TC.seconds = TC.seconds + numSecs;
     if (TC.seconds >= SIXTYSECONDS)
     {
-      TC.seconds = 0;
+      // Roll Over
+      TC.seconds = TC.seconds%SIXTYSECONDS;
       // Advance Minutes
-      TC.minutes = TC.minutes + 1;
+      TC.minutes = TC.minutes + numMinutes;
       if (TC.minutes >= SIXTYMINUTES)
       {
-        TC.minutes = 0;
+        // Roll Over
+        TC.minutes = TC.minutes%SIXTYMINUTES;
         // Advance Hours
-        TC.hours = TC.hours + 1;
+        TC.hours = TC.hours + numHours;
         if (TC.hours >= TWENTYFOURHOURS)
         {
-          TC.hours = 0;
+          // Roll Over
+          TC.hours = TC.hours%TWENTYFOURHOURS;
         }
       }
     }
   }
-  return secUpdate;
 }
 
-// Call this function at a fixed rate to advance the clock in reverse
-
-bool timeClock_tickREV()
+// Move the clock backward the given amount
+void timeClock_tickREV(uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
 {
-  // Update flag
-  bool secUpdate = false;
-  // Update count
-  TC.numTicks = TC.numTicks + 1;
-  // Milliseconds
-  TC.milliSeconds = TC.milliSeconds - TC.msPerTic;
-
-  if (TC.numTicks >= TC.ticksPerSec)
+  // Advance Milliseconds
+  TC.milliSeconds = TC.milliSeconds - numMilSecs;
+  if (TC.milliSeconds <= 0)
   {
-    // Update
-    secUpdate = true;
-    // Reset
-    TC.numTicks = 0;
-    TC.milliSeconds = ONETHOUSAND_MS;
-
-    // Advance Seconds (relies on underflow)
-    TC.seconds = TC.seconds - 1;
-    if (TC.seconds >= SIXTYSECONDS)
+    // Roll Over
+    TC.milliSeconds = (ONETHOUSAND_MS-(-TC.milliSeconds%ONETHOUSAND_MS))%ONETHOUSAND_MS;
+    // Advance Seconds
+    TC.seconds = TC.seconds - numSecs;
+    if (TC.seconds < 0)
     {
-      TC.seconds = SIXTYSECONDS - 1;
-      // Advance Minutes (relies on underflow)
-      TC.minutes = TC.minutes - 1;
-      if (TC.minutes >= SIXTYMINUTES)
+      // Roll Over
+      TC.seconds = (SIXTYSECONDS-(-TC.seconds%SIXTYSECONDS))%SIXTYSECONDS;
+      // Advance Minutes
+      TC.minutes = TC.minutes - numMinutes;
+      if (TC.minutes < 0)
       {
-        TC.minutes = SIXTYMINUTES - 1;
-        // Advance Hours (relies on underflow)
-        TC.hours = TC.hours - 1;
-        if (TC.hours >= TWENTYFOURHOURS)
+        // Roll Over
+        TC.minutes = (SIXTYMINUTES-(-TC.minutes%SIXTYMINUTES))%SIXTYMINUTES;
+        // Advance Hours
+        TC.hours = TC.hours - numHours;
+        if (TC.hours < 0)
         {
-          TC.hours = TWENTYFOURHOURS - 1;
+          // Roll Over
+          TC.hours = (TWENTYFOURHOURS-(-TC.hours%TWENTYFOURHOURS))%TWENTYFOURHOURS;
         }
       }
     }
   }
-return secUpdate;
 }
 
 uint8_t timeClock_convert24hr_2_12hr(uint8_t hour)

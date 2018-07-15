@@ -1,15 +1,14 @@
 #include "interupts.h"
 #include "timeClock.h"
 #include "userInterface.h"
-
-#define PIN_BUZZ 6
-
+#include "buzzerDriver.h"
 
 void setup() {
   Serial.begin(9600);
   Serial.println("Booted");
   BH_initAll();
   MX_init();
+  BZ_init();
   interupts_init();
 }
 
@@ -19,25 +18,7 @@ uint32_t elapsedTime = 0;
 uint32_t timeMark = 0;
 
 void loop() {
-
-  if (BH_getAnIO('B',5))
-  {
-    Serial.println("Sent ON");
-    MX_powerSwitch(true);
-    delay(100);
-  }
-  
-  if (BH_getAnIO('B',4))
-  {
-    Serial.println("Sent OFF");
-    MX_powerSwitch(false);
-    delay(100);
-  }
-
-  if (BH_getAnIO('S',0))
-    MX_dispTest(true);
-  else
-    MX_dispTest(false);
+ 
 }
 
 void mainISR()
@@ -45,8 +26,9 @@ void mainISR()
   
   // Counter
   tickCount++;
-  // Tick Clock
-  timeClock_tickFWD();
+  // Tick Clock if enabled
+  if (tickClock_flag)
+    timeClock_tickFWD(INTERUPT_PERIOD_S*1000,1,1,1);
   // Tick the User Interface
   ui_tick();
   //printTime();

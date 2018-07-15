@@ -61,9 +61,8 @@
 #define MX_MASK_DP 0x80
 
 // Start Up
-#define MX_STARTUP_LENGTH 14
-//char MX_STARTUP[MX_STARTUP_LENGTH] = {'1','2','3','4','.','A','B','C','D'};
-char MX_STARTUP[MX_STARTUP_LENGTH] = {'0','.','1','.','2','.','3','.','4','.','5','.','6','.'};
+#define MX_STARTUP_LENGTH 8
+char MX_STARTUP[MX_STARTUP_LENGTH] = {'G','O','C','O','U','G','S','!'};
 
 
 // Forms a data stream from an address and the data
@@ -113,6 +112,7 @@ uint8_t _MX_decodeChar(char d)
 #define MX_CHAR_Y 0x3B
 #define MX_CHAR_Z 0x6D
 #define MX_CHAR_BLANK 0x00
+#define MX_CHAR_EXCLAMATION_POINT 0xA0
 
 
   
@@ -264,6 +264,10 @@ uint8_t _MX_decodeChar(char d)
     case 'Z':
     return MX_CHAR_Z;
     break;
+
+    case '!':
+    return MX_CHAR_EXCLAMATION_POINT;
+    break;
     
     default:
     return 0x00;
@@ -321,6 +325,7 @@ void _MX_SendData(uint16_t data)
   digitalWrite(PIN_CS,HIGH);
   //Serial.println("\nData Sent");
 }
+
 
 
 // Turns on = true, off = false 
@@ -393,6 +398,11 @@ void MX_disp_string(char* text,uint8_t textLength)
   }
 }
 
+void MX_writeBLANK()
+{
+  char blank[8] = {' ',' ',' ',' ',' ',' ',' ',' ',};
+  MX_disp_string(blank,8);
+}
 
 // Init Settings
 void MX_init()
