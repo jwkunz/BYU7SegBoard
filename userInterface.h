@@ -175,7 +175,8 @@ void ui_tick()
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 5;
-        ui_buttonRelease_NextState = UI_SET_TIME_SECONDS_S;
+        // Do hours first
+        ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
         // Stop ticking clock
         tickClock_flag = false;
         Serial.println("Moving to set seconds");
