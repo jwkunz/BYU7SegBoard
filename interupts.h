@@ -7,8 +7,9 @@
 
 // User Parameter 
 #define INTERUPT_PERIOD_S (50E-3)
-#define INTERUPT_TUNEFACTOR (-128) // Empiracally set for 1 second ticks
-// -128 is barely too fast. -256 is really slow.
+#define INTERUPT_TUNEFACTOR (0) 
+//#define INTERUPT_TUNEFACTOR (-128) // Empiracally set for 1 second ticks
+// -128 is barely too fast.
 
 // Board Parameters
 #define BOARD_CLK_FREQ_HZ 16E6

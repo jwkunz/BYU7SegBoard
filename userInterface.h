@@ -28,8 +28,9 @@ volatile bool tickClock_flag = true;
 #define UI_SET_TIME_SECONDS_S 3
 #define UI_SET_TIME_MINUTES_S 4
 #define UI_SET_TIME_HOURS_S 5
-#define UI_SET_BUTTON_RELEASE_S 6
-#define UI_SET_FLASH_S 7
+#define UI_SET_TIME_AMPM_S 6
+#define UI_SET_BUTTON_RELEASE_S 7
+#define UI_SET_FLASH_S 8
 
 // Button Aliases
 #define UI_B0 (BH_getAnIO('B',0))
@@ -42,8 +43,7 @@ volatile bool tickClock_flag = true;
 
 // State Timing
 #define DISP_UPDATE_TICKS (INTERUPTS_PER_SECOND)
-#define DISP_FLASH_TICKS (INTERUPTS_PER_SECOND)
-
+#define DISP_FLASH_TICKS (INTERUPTS_PER_SECOND*1/20)
 
 // Counters
 uint16_t ui_updateDisp_ctr = 0;
@@ -155,6 +155,8 @@ void ui_tick()
       timeClock_init(INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC, START_MIN, START_HOURS);
       ui_updateDisp_ctr = 0;
       tickClock_flag = true;
+      // Pre-seed at half duty.
+      ui_flashDisp_ctr = (INTERUPTS_PER_SECOND/2);
       // Advance //
       ui_currentState = UI_IDLE_S;
       break;
@@ -219,7 +221,6 @@ void ui_tick()
       else
       {
         ui_currentState = ui_buttonRelease_NextState;
-        ui_flashDisp_ctr = 0;
         MX_dispTest(false);
       }
       break;
@@ -242,9 +243,6 @@ void ui_tick()
         timeClock_tickREV(1000,1,0,0);
         Serial.println("seconds--");
       }
-
-      // Update Display
-      ui_updateDisplay();
 
 
       // Advance //
@@ -273,9 +271,9 @@ void ui_tick()
       // Right
       if (UI_B0)
       {
-        Serial.println("Going to Hours");
+        Serial.println("Going to AMPM");
         ui_buttonRelease_ButtonNum = 0;
-        ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
+        ui_buttonRelease_NextState = UI_SET_TIME_AMPM_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
         break;
       }
@@ -305,9 +303,6 @@ void ui_tick()
         timeClock_tickREV(1000,60,1,0);
         Serial.println("Minutes--");
       }
-
-      // Update Display
-      ui_updateDisplay();
 
       // Advance //
 
@@ -367,8 +362,64 @@ void ui_tick()
         timeClock_tickREV(1000,60,60,1);
         Serial.println("Hours--");
       }
-      // Update
-      ui_updateDisplay();
+
+      // Advance //
+
+      // Exit Set Mode
+      if (UI_B5)
+      {
+        Serial.println("Leaving to Idle");
+        // Set up the button release parameters
+        ui_buttonRelease_ButtonNum = 5;
+        ui_buttonRelease_NextState = UI_IDLE_S;
+        ui_currentState = UI_SET_BUTTON_RELEASE_S;
+        // Start ticking clock
+        tickClock_flag = true;
+        break;
+      }
+      // Left
+      if (UI_B3)
+      {
+        Serial.println("Going to AMPM");
+        ui_buttonRelease_ButtonNum = 3;
+        ui_buttonRelease_NextState = UI_SET_TIME_AMPM_S;
+        ui_currentState = UI_SET_BUTTON_RELEASE_S;
+        break;
+      }
+      // Right
+      if (UI_B0)
+      {
+        Serial.println("Going to Minutes");
+        ui_buttonRelease_ButtonNum = 0;
+        ui_buttonRelease_NextState = UI_SET_TIME_MINUTES_S;
+        ui_currentState = UI_SET_BUTTON_RELEASE_S;
+        break;
+      }
+
+
+      // Flash if nothing else
+      ui_flashLastState = UI_SET_TIME_HOURS_S;
+      ui_currentState = UI_SET_FLASH_S;
+      break;
+
+    //////////////////////
+    // Set AM or PM
+    case (UI_SET_TIME_AMPM_S):
+      // Action //
+      Serial.println("Inside set AMPM");
+
+      // Increase
+      if (UI_B2)
+      {
+        timeClock_tickFWD(1000,60,60,12);
+        Serial.println("AMPM++");
+      }
+      // Decrease
+      else if (UI_B1)
+      {
+        timeClock_tickREV(1000,60,60,12);
+        Serial.println("AMPM--");
+      }
 
       // Advance //
 
@@ -396,25 +447,26 @@ void ui_tick()
       // Right
       if (UI_B0)
       {
-        Serial.println("Going to Minutes");
+        Serial.println("Going to Hours");
         ui_buttonRelease_ButtonNum = 0;
-        ui_buttonRelease_NextState = UI_SET_TIME_MINUTES_S;
+        ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
         break;
       }
 
 
       // Flash if nothing else
-      ui_flashLastState = UI_SET_TIME_HOURS_S;
+      ui_flashLastState = UI_SET_TIME_AMPM_S;
       ui_currentState = UI_SET_FLASH_S;
       break;
+
 
     //////////////////////
     // MAKE FLASHING
     case (UI_SET_FLASH_S):
       // Action //
-      ui_flashDisp_ctr++;
-      if(ui_flashDisp_ctr%2)
+      ui_flashDisp_ctr= (ui_flashDisp_ctr+1)%int(INTERUPTS_PER_SECOND);
+      if(ui_flashDisp_ctr<DISP_FLASH_TICKS)
         MX_writeBLANK();
       else
         ui_updateDisplay();
