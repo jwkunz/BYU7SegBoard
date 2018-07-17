@@ -12,7 +12,7 @@
 #define PIN_BTN_5 A5
 #define PIN_SW_0 A6
 
-#define BH_VTHRESHOLD 50
+#define BH_VTHRESHOLD 100
 
 // Status used for detecting edg
 struct buttonStatus_t

@@ -63,7 +63,7 @@ void timeClock_tickFWD(uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,ui
       // Roll Over
       TC.seconds = TC.seconds%SIXTYSECONDS;
       // Advance Minutes
-      TC.minutes = TC.minutes + numMinutes;
+      TC.minutes = TC.minutes + numMinutes;    
       if (TC.minutes >= SIXTYMINUTES)
       {
         // Roll Over

@@ -9,7 +9,8 @@
 #include "buzzerDriver.h"
 
 // General Parameters
-#define INTERUPTS_PER_SECOND (1/INTERUPT_PERIOD_S)
+#define INTERUPT_PERIOD_US 50000
+#define INTERUPTS_PER_SECOND (1E6/INTERUPT_PERIOD_US)
 #define DISP_STRING_LEN 10
 
 // Clock Start Parameters
