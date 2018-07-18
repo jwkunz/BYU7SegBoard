@@ -153,7 +153,7 @@ void ui_tick()
     case (UI_INIT_S):
       // Action //
       timeClock_init(&TM,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC, START_MIN, START_HOURS);
-      timeClock_init(&AL,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC+10, START_MIN, START_HOURS);
+      timeClock_init(&AL,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC+5, START_MIN, START_HOURS);
       ui_updateDisp_ctr = 0;
       tickClock_flag = true;
       // Pre-seed at half duty.
@@ -194,8 +194,8 @@ void ui_tick()
         ui_buttonRelease_ButtonNum = 4;
         // Do hours first
         ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
-        // Stop ticking clock
-        tickClock_flag = false;
+        // Keep ticking clock
+        tickClock_flag = true;
         //Serial.println("Moving to set Hours");
         // Setting the main time piece (TM) 
         settingTimePiece = &AL;
@@ -240,7 +240,7 @@ void ui_tick()
         soundAlarm_flag = false;
       }
       // Update Alarm
-      BZ_alarm(soundAlarm_flag);
+      BZ_alarmSong(soundAlarm_flag);
       break;
 
     //////////////////////
