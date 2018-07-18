@@ -4,12 +4,13 @@
 #include "buzzerDriver.h"
 
 // Determined empiracally
-#define INTERUPT_TUNE_FACTOR (+128)
+#define INTERUPT_TUNE_FACTOR (+115)
 // +141 is slow
 // +0 is fast
 // +50 is fast
 // +100 is fast
-// +128
+// +115 is
+// +128 is slow
 
 void setup() {
   Serial.begin(9600);
