@@ -20,7 +20,11 @@
 #define ZERO_UNDERFLOW 0
 #define ONETHOUSAND_MS 1000
 
-struct timeClock {
+
+// Data struct for the time clock
+// TM is the time clock
+// AL is the alarm clock
+struct timePiece {
   bool twelveHour_flag;
   int16_t milliSeconds;
   int8_t seconds;
@@ -28,7 +32,7 @@ struct timeClock {
   int8_t hours;
   char currentTime[TIMESTRINGLENGTH];
 
-} TC;
+} TM,AL;
 
 /* Init the clock
 
@@ -38,42 +42,42 @@ struct timeClock {
   // minutes: Initial minutes, 0-59
   // hours: Initial hours in 24 hour format, 0-23
 */
-void timeClock_init(uint16_t ticksPerSec, bool twelveHour_flag, uint8_t seconds, uint8_t minutes, uint8_t hours)
+void timeClock_init(timePiece* TmPc,uint16_t ticksPerSec, bool twelveHour_flag, uint8_t seconds, uint8_t minutes, uint8_t hours)
 {
-  TC.twelveHour_flag = twelveHour_flag;
-  TC.milliSeconds = 0;
-  TC.seconds = seconds;
-  TC.minutes = minutes;
-  TC.hours = hours;
+  TmPc->twelveHour_flag = twelveHour_flag;
+  TmPc->milliSeconds = 0;
+  TmPc->seconds = seconds;
+  TmPc->minutes = minutes;
+  TmPc->hours = hours;
 }
 
 // Moves clock forward the given amount
-void timeClock_tickFWD(uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
+void timeClock_tickFWD(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
 { 
   // Advance Milliseconds
-  TC.milliSeconds = TC.milliSeconds + numMilSecs;
-  if (TC.milliSeconds >= ONETHOUSAND_MS)
+  TmPc->milliSeconds = TmPc->milliSeconds + numMilSecs;
+  if (TmPc->milliSeconds >= ONETHOUSAND_MS)
   {
     // Roll Over
-    TC.milliSeconds = TC.milliSeconds%ONETHOUSAND_MS;
+    TmPc->milliSeconds = TmPc->milliSeconds%ONETHOUSAND_MS;
     // Advance Seconds
-    TC.seconds = TC.seconds + numSecs;
-    if (TC.seconds >= SIXTYSECONDS)
+    TmPc->seconds = TmPc->seconds + numSecs;
+    if (TmPc->seconds >= SIXTYSECONDS)
     {
       // Roll Over
-      TC.seconds = TC.seconds%SIXTYSECONDS;
+      TmPc->seconds = TmPc->seconds%SIXTYSECONDS;
       // Advance Minutes
-      TC.minutes = TC.minutes + numMinutes;    
-      if (TC.minutes >= SIXTYMINUTES)
+      TmPc->minutes = TmPc->minutes + numMinutes;    
+      if (TmPc->minutes >= SIXTYMINUTES)
       {
         // Roll Over
-        TC.minutes = TC.minutes%SIXTYMINUTES;
+        TmPc->minutes = TmPc->minutes%SIXTYMINUTES;
         // Advance Hours
-        TC.hours = TC.hours + numHours;
-        if (TC.hours >= TWENTYFOURHOURS)
+        TmPc->hours = TmPc->hours + numHours;
+        if (TmPc->hours >= TWENTYFOURHOURS)
         {
           // Roll Over
-          TC.hours = TC.hours%TWENTYFOURHOURS;
+          TmPc->hours = TmPc->hours%TWENTYFOURHOURS;
         }
       }
     }
@@ -81,32 +85,32 @@ void timeClock_tickFWD(uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,ui
 }
 
 // Move the clock backward the given amount
-void timeClock_tickREV(uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
+void timeClock_tickREV(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
 {
   // Advance Milliseconds
-  TC.milliSeconds = TC.milliSeconds - numMilSecs;
-  if (TC.milliSeconds <= 0)
+  TmPc->milliSeconds = TmPc->milliSeconds - numMilSecs;
+  if (TmPc->milliSeconds <= 0)
   {
     // Roll Over
-    TC.milliSeconds = (ONETHOUSAND_MS-(-TC.milliSeconds%ONETHOUSAND_MS))%ONETHOUSAND_MS;
+    TmPc->milliSeconds = (ONETHOUSAND_MS-(-TmPc->milliSeconds%ONETHOUSAND_MS))%ONETHOUSAND_MS;
     // Advance Seconds
-    TC.seconds = TC.seconds - numSecs;
-    if (TC.seconds < 0)
+    TmPc->seconds = TmPc->seconds - numSecs;
+    if (TmPc->seconds < 0)
     {
       // Roll Over
-      TC.seconds = (SIXTYSECONDS-(-TC.seconds%SIXTYSECONDS))%SIXTYSECONDS;
+      TmPc->seconds = (SIXTYSECONDS-(-TmPc->seconds%SIXTYSECONDS))%SIXTYSECONDS;
       // Advance Minutes
-      TC.minutes = TC.minutes - numMinutes;
-      if (TC.minutes < 0)
+      TmPc->minutes = TmPc->minutes - numMinutes;
+      if (TmPc->minutes < 0)
       {
         // Roll Over
-        TC.minutes = (SIXTYMINUTES-(-TC.minutes%SIXTYMINUTES))%SIXTYMINUTES;
+        TmPc->minutes = (SIXTYMINUTES-(-TmPc->minutes%SIXTYMINUTES))%SIXTYMINUTES;
         // Advance Hours
-        TC.hours = TC.hours - numHours;
-        if (TC.hours < 0)
+        TmPc->hours = TmPc->hours - numHours;
+        if (TmPc->hours < 0)
         {
           // Roll Over
-          TC.hours = (TWENTYFOURHOURS-(-TC.hours%TWENTYFOURHOURS))%TWENTYFOURHOURS;
+          TmPc->hours = (TWENTYFOURHOURS-(-TmPc->hours%TWENTYFOURHOURS))%TWENTYFOURHOURS;
         }
       }
     }
@@ -142,28 +146,28 @@ char timeClock_AM_or_PM(uint8_t hour)
 
 // Update Current Time
 // By doing this only when called, it save resources
-void _timeClock_updateTime()
+void _timeClock_updateTime(timePiece* TmPc)
 {
-  if (TC.twelveHour_flag) // 12 Hours
+  if (TmPc->twelveHour_flag) // 12 Hours
   {
-    sprintf(TC.currentTime, "%02u:%02u:%02u.%03u %cm", timeClock_convert24hr_2_12hr(TC.hours), TC.minutes, TC.seconds, TC.milliSeconds, timeClock_AM_or_PM(TC.hours));
+    sprintf(TmPc->currentTime, "%02u:%02u:%02u.%03u %cm", timeClock_convert24hr_2_12hr(TmPc->hours), TmPc->minutes, TmPc->seconds, TmPc->milliSeconds, timeClock_AM_or_PM(TmPc->hours));
   }
   else // 24 Hour
   {
-    sprintf(TC.currentTime, "%02u:%02u:%02u.%03u   ", TC.hours, TC.minutes, TC.seconds, TC.milliSeconds);
+    sprintf(TmPc->currentTime, "%02u:%02u:%02u.%03u   ", TmPc->hours, TmPc->minutes, TmPc->seconds, TmPc->milliSeconds);
   }
 }
 
 // Copies the current time into time
 // time is an array of chars, TIMESTRINGLENGTH long.
-void timeClock_getTime(char* timeString)
+void timeClock_getTime(timePiece* TmPc,char* timeString)
 {
   // Update Time
-  _timeClock_updateTime();
+  _timeClock_updateTime(TmPc);
   // Copy over
   for (uint8_t m = 0; m < TIMESTRINGLENGTH; m++)
   {
-    timeString[m] = TC.currentTime[m];
+    timeString[m] = TmPc->currentTime[m];
   }
 }
 

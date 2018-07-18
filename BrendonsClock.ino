@@ -4,12 +4,13 @@
 #include "buzzerDriver.h"
 
 // Determined empiracally
-#define INTERUPT_TUNE_FACTOR (+128)
+#define INTERUPT_TUNE_FACTOR (+115)
 // +141 is slow
 // +0 is fast
 // +50 is fast
 // +100 is fast
-// +128
+// +115 is
+// +128 is slow
 
 void setup() {
   Serial.begin(9600);
@@ -45,7 +46,7 @@ void mainISR()
   tickCount++;
   // Tick Clock if enabled
   if (tickClock_flag)
-    timeClock_tickFWD(INTERUPT_PERIOD_US/1000,1,1,1);
+    timeClock_tickFWD(&TM,INTERUPT_PERIOD_US/1000,1,1,1);
   // Tick the User Interface
   ui_tick();
   //printTime();
@@ -54,10 +55,10 @@ void mainISR()
 }
 
 
-void printTime()
+void printTime(timePiece* TmPc)
 {
   char dispString[TIMESTRINGLENGTH] = {0};
-  timeClock_getTime(dispString);
+  timeClock_getTime(TmPc,dispString);
   for(uint8_t m = 0; m < TIMESTRINGLENGTH; m++)
   {
     Serial.print(dispString[m]);
