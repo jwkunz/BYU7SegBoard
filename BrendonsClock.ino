@@ -4,12 +4,13 @@
 #include "buzzerDriver.h"
 
 // Determined empiracally
-#define INTERUPT_TUNE_FACTOR (+115)
+#define INTERUPT_TUNE_FACTOR (+108)
 // +141 is slow
 // +0 is fast
 // +50 is fast
 // +100 is fast
-// +115 is
+// +108 is
+// +115 is slow
 // +128 is slow
 
 void setup() {
