@@ -1,0 +1,55 @@
+Added Component: Designator=B0(GPTS203211B)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Momentary Pushbutton Switch - 12mm Square"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.sparkfun.com/products/9190"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "CW181-ND"; VariantName = "[No Variations]"
+Added Component: Designator=B1(GPTS203211B)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Momentary Pushbutton Switch - 12mm Square"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.sparkfun.com/products/9190"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "CW181-ND"; VariantName = "[No Variations]"
+Added Component: Designator=B2(GPTS203211B)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Momentary Pushbutton Switch - 12mm Square"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.sparkfun.com/products/9190"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "CW181-ND"; VariantName = "[No Variations]"
+Added Component: Designator=B3(GPTS203211B)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Momentary Pushbutton Switch - 12mm Square"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.sparkfun.com/products/9190"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "CW181-ND"; VariantName = "[No Variations]"
+Added Component: Designator=B4(GPTS203211B)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Momentary Pushbutton Switch - 12mm Square"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.sparkfun.com/products/9190"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "CW181-ND"; VariantName = "[No Variations]"
+Added Component: Designator=B5(GPTS203211B)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Momentary Pushbutton Switch - 12mm Square"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.sparkfun.com/products/9190"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "CW181-ND"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+3.3V Pin=B0-1
+Added Pin To Net: NetName=B0_o Pin=B0-2
+Added Pin To Net: NetName=+3.3V Pin=B1-1
+Added Pin To Net: NetName=B1_o Pin=B1-2
+Added Pin To Net: NetName=+3.3V Pin=B2-1
+Added Pin To Net: NetName=B2_o Pin=B2-2
+Added Pin To Net: NetName=+3.3V Pin=B3-1
+Added Pin To Net: NetName=B3_o Pin=B3-2
+Added Pin To Net: NetName=+3.3V Pin=B4-1
+Added Pin To Net: NetName=B4_o Pin=B4-2
+Added Pin To Net: NetName=+3.3V Pin=B5-1
+Added Pin To Net: NetName=B5_o Pin=B5-2
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B0 COM-09190
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B1 COM-09190
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B2 COM-09190
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B3 COM-09190
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B4 COM-09190
+Added Member To Class: ClassName=U_ButtonAndSwitches Member=Component B5 COM-09190
+Added Member To Class: ClassName=TopLevel Member=Component H1 68016-210HLF
