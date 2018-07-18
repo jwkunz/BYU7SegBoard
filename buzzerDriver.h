@@ -12,9 +12,12 @@ void BZ_beep()
   tone(PIN_BUZZER,BZ_BEEP_FREQ_HZ,BZ_BEEP_DURATION_MS);
 }
 
-void BZ_chime()
+void BZ_alarm(bool on)
 {
-  tone(PIN_BUZZER,BZ_BEEP_FREQ_HZ,BZ_CHIME_DURATION_MS);
+  if(on)
+    tone(PIN_BUZZER,BZ_BEEP_FREQ_HZ);
+  else
+    noTone(PIN_BUZZER);
 }
 
 void BZ_init()

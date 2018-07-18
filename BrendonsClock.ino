@@ -36,7 +36,6 @@ void printElapsedTime()
 }
 
 void loop() {
- 
 }
 
 void mainISR()

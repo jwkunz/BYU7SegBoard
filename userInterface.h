@@ -123,24 +123,21 @@ void ui_updateDisplay(timePiece* TmPc)
 // Checks if the alarm should go
 bool ui_checkForAlarmTrigger()
 {
-  // Look for matching characters
-  for (uint8_t m = 0; m < DISP_STRING_LEN; m++)
-  {
-    if (timeOnDisplay[m] != alarmTime[m])
-    {
-      return false;
-    }
-  }
   // Check if alarm is set
-  uint8_t swVal = BH_getAnIO('S', 0);
-  if (swVal == 1)
-  {
-    return true;
-  }
-  else
-  {
+  if (BH_getAnIO('S', 0) == 0)
     return false;
-  }
+    
+  // Compare the TM and AL object
+  
+  if(TM.hours != AL.hours)
+    return false;
+  if(TM.minutes != AL.minutes)
+    return false;
+  if(TM.seconds != AL.seconds)
+    return false;
+  // Times match (not milliseconds)
+  Serial.println("Alarm Match!");
+  return true;
 }
 
 
@@ -156,7 +153,7 @@ void ui_tick()
     case (UI_INIT_S):
       // Action //
       timeClock_init(&TM,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC, START_MIN, START_HOURS);
-      timeClock_init(&AL,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC, START_MIN, START_HOURS);
+      timeClock_init(&AL,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC+10, START_MIN, START_HOURS);
       ui_updateDisp_ctr = 0;
       tickClock_flag = true;
       // Pre-seed at half duty.
@@ -210,8 +207,11 @@ void ui_tick()
       if (ui_checkForAlarmTrigger())
       {
         ui_currentState = UI_DRIVE_ALARM_S;
+        soundAlarm_flag = true;
         break;
       }
+
+      
       // Update Display after so many ticks
       if (ui_updateDisp_ctr >= DISP_UPDATE_TICKS)
       {
@@ -230,9 +230,17 @@ void ui_tick()
       // Advance //
       // Check if alarm switch is on
       if (BH_getAnIO('S', 0))
+      {
         ui_currentState = UI_DRIVE_ALARM_S;
+        soundAlarm_flag = true;
+      }
       else // User turned off
+      {
         ui_currentState = UI_IDLE_S;
+        soundAlarm_flag = false;
+      }
+      // Update Alarm
+      BZ_alarm(soundAlarm_flag);
       break;
 
     //////////////////////
