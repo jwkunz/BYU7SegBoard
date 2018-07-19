@@ -4,12 +4,14 @@
 #include "buzzerDriver.h"
 
 // Determined empiracally
-#define INTERUPT_TUNE_FACTOR (+115)
+#define INTERUPT_TUNE_FACTOR (+104)
 // +141 is slow
 // +0 is fast
 // +50 is fast
 // +100 is fast
-// +115 is
+// +104 is
+// +108 is slow (barely)
+// +115 is slow
 // +128 is slow
 
 void setup() {
@@ -48,9 +50,7 @@ void mainISR()
     timeClock_tickFWD(&TM,INTERUPT_PERIOD_US/1000,1,1,1);
   // Tick the User Interface
   ui_tick();
-  //printTime();
-  //ui_updateDisplay();
-  
+  printTime(&TM); 
 }
 
 
