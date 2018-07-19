@@ -51,6 +51,9 @@
 
 #define MX_MASK_DP 0x80
 
+// Start Up
+#define MX_STARTUP_LENGTH 8
+const char MX_STARTUP[MX_STARTUP_LENGTH] = {'G','O','C','O','U','G','S','!'};
 
 // Forms a data stream from an address and the data
 uint16_t _MX_formCode(uint8_t address,uint8_t data)

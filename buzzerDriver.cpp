@@ -36,6 +36,46 @@ unsigned int noteNumber = 0; // Iterator in song array
 unsigned int noteBeatsLeft = 0; // Counter of number of beats to hold note.  Counts down to 0.
 unsigned int noteFrequency = 0; // Frequency of note to sustain
 
+//Emry's Song
+const unsigned int SONG[] = {
+  0, 0, // Skip First Note
+  C1, 1,
+  E1, 1,
+  G1, 1,
+  C2, 1,
+  nB1, 1,
+  nA1, 1,
+  G1, 2,
+  //
+  C1, 1,
+  E1, 1,
+  G1, 1,
+  C2, 1,
+  nB1, 1,
+  nA1, 1,
+  G1, 2,
+  //
+  C1, 1,
+  E1, 1,
+  G1, 1,
+  C2, 1,
+  E2, 1,
+  D2, 1,
+  E2, 1,
+  G2, 1,
+  E2, 2,
+  D2, 2,
+  C2, 4
+
+};
+//
+//
+// End Song
+
+#define SONG_NUM_BYTES (sizeof(SONG))
+#define SONG_SIZE (SONG_NUM_BYTES/(sizeof(unsigned int))) // The length of the song array
+
+
 // This function sustains the next note of the song until the amound of beats left for that note is zero.
 // Each time tickSong is called (every beat) the beat count goes down by 1.
 // After finishing a note, it advances to the next note.  It does nothing if the song is finished

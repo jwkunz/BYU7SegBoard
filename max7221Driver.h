@@ -18,10 +18,6 @@
 #define MX_DATA_LEN 16
 #define MX_NO_SEGS 8
 
-// Start Up
-#define MX_STARTUP_LENGTH 8
-const char MX_STARTUP[MX_STARTUP_LENGTH] = {'G','O','C','O','U','G','S','!'};
-
 // Turns on = true, off = false 
 void MX_powerSwitch(bool state);
 

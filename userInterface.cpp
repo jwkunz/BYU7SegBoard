@@ -2,8 +2,10 @@
 #define userInterface_c
 
 // Includes
-#include "timeClock.h"
 #include "userInterface.h"
+#include "timeClock.h"
+#include "max7221Driver.h"
+
 
 
 // States
@@ -37,16 +39,18 @@ uint8_t ui_buttonRelease_NextState = UI_INIT_S;
 uint8_t ui_buttonRelease_ButtonNum = 0;
 
 // The time piece to set
-extern timePiece TIME_CLK;
-timePiece* settingTimePiece = &TIME_CLK;
+timePiece* settingTimePiece = timeClock_getClock();
 
-char alarmTime[DISP_STRING_LEN] = {'0', '6', '.', '3', '0', '.', '0', '0', ' ', 'A'};
+// Settings
+#define UI_12HR_FLAG (true)
+
+// Status Flags
+bool soundAlarm_flag = false;
+bool tickClock_flag = true;
+
+
 char timeOnDisplay[DISP_STRING_LEN] = {0};
 //////////////////
-
-
-timePiece TIME_CLK;
-timePiece ALARM_CLK;
 
 
 // Saves the display time as timeOnDisplay
@@ -73,6 +77,9 @@ void ui_updateDisplay(timePiece* TmPc)
 {
   // Get the current time
   char timeString[TIMESTRINGLENGTH] = {0};
+  void timeClock_getTime(timePiece* TmPc,char* timeString);
+
+  extern void timeClock_getTime(timePiece* TmPc, char* timeString);
   timeClock_getTime(TmPc,timeString);
 
   // Extract characters
@@ -88,7 +95,7 @@ void ui_updateDisplay(timePiece* TmPc)
   dispString[8] = ' ';
 
   // Check Format from switch
-  if (twelveHourClk_flag) // High =  12 hour
+  if (TmPc->twelveHour_flag) // High =  12 hour
     dispString[9] = timeString[13];
   else // Low = 24 hour
     dispString[9] = ' ';
@@ -115,11 +122,11 @@ bool ui_checkForAlarmTrigger()
     
   // Compare the TM and AL object
   
-  if(TIME_CLK.hours != ALARM_CLK.hours)
+  if(timeClock_getClock()->hours != timeClock_getAlarm()->hours)
     return false;
-  if(TIME_CLK.minutes != ALARM_CLK.minutes)
+  if(timeClock_getClock()->minutes != timeClock_getAlarm()->minutes)
     return false;
-  if(TIME_CLK.seconds != ALARM_CLK.seconds)
+  if(timeClock_getClock()->seconds != timeClock_getAlarm()->seconds)
     return false;
   // Times match (not milliseconds)
   Serial.println("Alarm Match!");
@@ -138,8 +145,8 @@ void ui_tick()
     // Intialize everything
     case (UI_INIT_S):
       // Action //
-      timeClock_init(&TIME_CLK,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC, START_MIN, START_HOURS);
-      timeClock_init(&ALARM_CLK,INTERUPTS_PER_SECOND, twelveHourClk_flag, START_SEC+5, START_MIN, START_HOURS);
+      timeClock_init(timeClock_getClock(),INTERUPTS_PER_SECOND, UI_12HR_FLAG, START_SEC, START_MIN, START_HOURS);
+      timeClock_init(timeClock_getAlarm(),INTERUPTS_PER_SECOND, UI_12HR_FLAG, START_SEC+5, START_MIN, START_HOURS);
       ui_updateDisp_ctr = 0;
       tickClock_flag = true;
       // Pre-seed at half duty.
@@ -168,7 +175,7 @@ void ui_tick()
         tickClock_flag = false;
         //Serial.println("Moving to set Hours");
         // Setting the main time piece (TM) 
-        settingTimePiece = &TIME_CLK;
+        settingTimePiece = timeClock_getClock();
         break;
       }
 
@@ -184,7 +191,7 @@ void ui_tick()
         tickClock_flag = true;
         //Serial.println("Moving to set Hours");
         // Setting the main time piece (TM) 
-        settingTimePiece = &ALARM_CLK;
+        settingTimePiece = timeClock_getAlarm();
         break;
       }
 
@@ -202,7 +209,7 @@ void ui_tick()
       if (ui_updateDisp_ctr >= DISP_UPDATE_TICKS)
       {
         ui_currentState = UI_IDLE_S;
-        ui_updateDisplay(&TIME_CLK);
+        ui_updateDisplay(timeClock_getClock());
         ui_updateDisp_ctr = 0;
         break;
       }
@@ -267,7 +274,7 @@ void ui_tick()
       // Advance //
 
       // Exit Set Mode Time Mode
-      if ((UI_B5)&&(settingTimePiece==&TIME_CLK))
+      if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -279,7 +286,7 @@ void ui_tick()
         break;
       }
       // Exit Set Mode Alarm Mode
-      if ((UI_B4)&&(settingTimePiece==&ALARM_CLK))
+      if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -339,7 +346,7 @@ void ui_tick()
       // Advance //
 
       // Exit Set Mode Time Mode
-      if ((UI_B5)&&(settingTimePiece==&TIME_CLK))
+      if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -351,7 +358,7 @@ void ui_tick()
         break;
       }
       // Exit Set Mode Alarm Mode
-      if ((UI_B4)&&(settingTimePiece==&ALARM_CLK))
+      if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -410,7 +417,7 @@ void ui_tick()
 
       // Advance //
       // Exit Set Mode Time Mode
-      if ((UI_B5)&&(settingTimePiece==&TIME_CLK))
+      if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -422,7 +429,7 @@ void ui_tick()
         break;
       }
       // Exit Set Mode Alarm Mode
-      if ((UI_B4)&&(settingTimePiece==&ALARM_CLK))
+      if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -481,7 +488,7 @@ void ui_tick()
       // Advance //
 
       // Exit Set Mode Time Mode
-      if ((UI_B5)&&(settingTimePiece==&TIME_CLK))
+      if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -493,7 +500,7 @@ void ui_tick()
         break;
       }
       // Exit Set Mode Alarm Mode
-      if ((UI_B4)&&(settingTimePiece==&ALARM_CLK))
+      if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
         //Serial.println("Leaving to Idle");
         // Set up the button release parameters
@@ -551,7 +558,17 @@ void ui_tick()
   }
 }
 
+// Get the alarm status
+bool ui_getAlarmStatus()
+{
+  return soundAlarm_flag;
+}
 
+// Get the ticking status
+bool ui_getTickStatus()
+{
+  return tickClock_flag;
+}
 
 
 #endif

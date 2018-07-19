@@ -50,11 +50,11 @@ void mainISR()
   // Counter
   tickCount++;
   // Tick Clock if enabled
-  if (tickClock_flag)
-    timeClock_tickFWD(&TIME_CLK,INTERUPT_PERIOD_US/1000,1,1,1);
+  if (ui_getTickStatus())
+    timeClock_tickFWD(timeClock_getClock(),INTERUPT_PERIOD_US/1000,1,1,1);
   // Tick the User Interface
   ui_tick();
-  printTime(&TIME_CLK); 
+  printTime(timeClock_getClock()); 
 }
 
 

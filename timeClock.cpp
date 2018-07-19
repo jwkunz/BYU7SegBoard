@@ -19,6 +19,11 @@
 #define ONETHOUSAND_MS 1000
 
 
+// Two clocks
+timePiece TIME_CLK;
+timePiece ALARM_CLK;
+
+
 /* Init the clock
 
   // tics per second: The number of times to call the tick function before one second passes
@@ -155,6 +160,19 @@ void _timeClock_AM_or_PM(timePiece* TmPc,char* timeString)
     timeString[m] = TmPc->currentTime[m];
   }
 }
+
+
+// Get the alarm pointer
+timePiece* timeClock_getAlarm()
+{
+  return &ALARM_CLK;
+};
+
+// Get the main clock pointer
+timePiece* timeClock_getClock()
+{
+  return &TIME_CLK;
+};
 
 #endif
 

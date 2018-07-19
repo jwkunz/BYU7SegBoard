@@ -54,43 +54,6 @@ void BZ_init();
 #define nB2   988
 #define C3   1047
 
-//Emry's Song
-const unsigned int SONG[] = {
-  0, 0, // Skip First Note
-  C1, 1,
-  E1, 1,
-  G1, 1,
-  C2, 1,
-  nB1, 1,
-  nA1, 1,
-  G1, 2,
-  //
-  C1, 1,
-  E1, 1,
-  G1, 1,
-  C2, 1,
-  nB1, 1,
-  nA1, 1,
-  G1, 2,
-  //
-  C1, 1,
-  E1, 1,
-  G1, 1,
-  C2, 1,
-  E2, 1,
-  D2, 1,
-  E2, 1,
-  G2, 1,
-  E2, 2,
-  D2, 2,
-  C2, 4
 
-};
-//
-//
-// End Song
-
-#define SONG_NUM_BYTES (sizeof(SONG))
-#define SONG_SIZE (SONG_NUM_BYTES/(sizeof(unsigned int))) // The length of the song array
 
 #endif

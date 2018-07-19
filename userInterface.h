@@ -17,9 +17,7 @@
 #define START_HOURS 0
 #define START_MIN 0
 #define START_SEC 0
-volatile bool twelveHourClk_flag = true;
-volatile bool soundAlarm_flag = false;
-volatile bool tickClock_flag = true;
+
 
 // State Timing
 #define DISP_UPDATE_TICKS (INTERUPTS_PER_SECOND)
@@ -39,5 +37,15 @@ bool ui_checkForAlarmTrigger();
 
 // Tick function for the user interface
 void ui_tick();
+
+// Getters //
+
+// Get the alarm status
+bool ui_getAlarmStatus();
+
+// Get the ticking status
+bool ui_getTickStatus();
+
+
 
 #endif

@@ -11,25 +11,22 @@
 #include "Arduino.h"
 
 #define TIMESTRINGLENGTH 16
-// Data struct for the time clock
-// TM is the time clock
-// AL is the alarm clock
 
-class timePiece {
-  public:
-  timePiece()
-  {}
-  bool twelveHour_flag;
+// Data struct for the time clock
+struct timePiece { 
   int16_t milliSeconds;
   int8_t seconds;
   int8_t minutes;
   int8_t hours;
   char currentTime[TIMESTRINGLENGTH];
+  bool twelveHour_flag;
 };
 
+// Get the alarm clock pointer
+timePiece* timeClock_getAlarm();
 
-timePiece TIME_CLK;
-timePiece ALARM_CLK;
+// Get the time clock pointer
+timePiece* timeClock_getClock();
 
 /* Init the clock
 
@@ -50,6 +47,8 @@ void timeClock_tickREV(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8
 // Copies the current time into time
 // time is an array of chars, TIMESTRINGLENGTH long.
 void timeClock_getTime(timePiece* TmPc,char* timeString);
+
+
 
 #endif
 
