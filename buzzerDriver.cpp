@@ -40,17 +40,16 @@ unsigned int noteFrequency = 0; // Frequency of note to sustain
 // When BZ_SONG is complete, return true
 
 
-bool _BZ_tickBZ_SONG(const unsigned int* BZ_SONG)
+bool _BZ_tickBZ_SONG(const unsigned int* song)
 {
-
   if (noteNumber == 0) // Check for Initial State
   {
     // Advance in Array
     noteNumber = noteNumber + 2;
     // Find the intial frequency
-    noteFrequency = (BZ_SONG)[noteNumber];
+    noteFrequency = song[noteNumber];
     // Get the initial number of beats
-    noteBeatsLeft = (BZ_SONG)[noteNumber + 1];
+    noteBeatsLeft = song[noteNumber + 1];
     return false; // Not Over
   }
   else if (noteNumber >= BZ_SONG_SIZE) // BZ_SONGOver
@@ -84,23 +83,21 @@ bool _BZ_tickBZ_SONG(const unsigned int* BZ_SONG)
       // Get the new number of beats
       noteBeatsLeft = (BZ_SONG)[(noteNumber + 1)];
     }
-
     return false; // Not Over
   }
 
 }
 
 // Counts ticks for the tempo
-uint8_t BZ_BZ_SONGTickCounter = 0;
+uint8_t BZ_songTickCounter = 0;
 
 // Plays BZ_SONG continously while driven on
 void BZ_alarmBZ_SONG(bool on)
 {
-
   if (on)
   {
-    BZ_BZ_SONGTickCounter++;
-    if (BZ_BZ_SONGTickCounter>BZ_TICKS_PER_BEAT)
+    BZ_songTickCounter++;
+    if (BZ_songTickCounter>BZ_TICKS_PER_BEAT)
     {
       if(_BZ_tickBZ_SONG(BZ_SONG))
       {
@@ -109,7 +106,7 @@ void BZ_alarmBZ_SONG(bool on)
         noteBeatsLeft = 0;
         noteFrequency = 0; ;
       }
-      BZ_BZ_SONGTickCounter = 0;
+      BZ_songTickCounter = 0;
     }
   }
   else
@@ -120,7 +117,7 @@ void BZ_alarmBZ_SONG(bool on)
 void BZ_init()
 {
   pinMode(PIN_BUZZER, OUTPUT);
-  BZ_BZ_SONGTickCounter = 0;
+  BZ_songTickCounter = 0;
   BZ_beep();
 }
 

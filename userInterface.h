@@ -18,9 +18,9 @@
 #define UI_12HR_FLAG (true)
 
 // Alarm Start Parameters
-#define UI_ALARM_START_HOURS 5
+#define UI_ALARM_START_HOURS 0
 #define UI_ALARM_START_MINUTES 0
-#define UI_ALARM_START_SECONDS 0
+#define UI_ALARM_START_SECONDS 5
 
 // State Timing
 #define DISP_UPDATE_TICKS (GB_INTERUPTS_PER_SECOND)
