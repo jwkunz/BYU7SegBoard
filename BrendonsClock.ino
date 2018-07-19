@@ -29,6 +29,8 @@ uint64_t tickCount = 0;
 uint32_t lastTime = 0;
 uint32_t elapsedTime = 0;
 uint32_t timeMark = 0;
+
+
 void printElapsedTime()
 {
   timeMark = micros();
@@ -40,6 +42,8 @@ void printElapsedTime()
 void loop() {
 }
 
+extern timePiece TIME_CLK;
+
 void mainISR()
 {
   //printElapsedTime();
@@ -47,10 +51,10 @@ void mainISR()
   tickCount++;
   // Tick Clock if enabled
   if (tickClock_flag)
-    timeClock_tickFWD(&TM,INTERUPT_PERIOD_US/1000,1,1,1);
+    timeClock_tickFWD(&TIME_CLK,INTERUPT_PERIOD_US/1000,1,1,1);
   // Tick the User Interface
   ui_tick();
-  printTime(&TM); 
+  printTime(&TIME_CLK); 
 }
 
 
