@@ -77,9 +77,6 @@ void ui_updateDisplay(timePiece* TmPc)
 {
   // Get the current time
   char timeString[TIMESTRINGLENGTH] = {0};
-  void timeClock_getTime(timePiece* TmPc,char* timeString);
-
-  extern void timeClock_getTime(timePiece* TmPc, char* timeString);
   timeClock_getTime(TmPc,timeString);
 
   // Extract characters

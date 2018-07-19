@@ -161,6 +161,18 @@ void _timeClock_AM_or_PM(timePiece* TmPc,char* timeString)
   }
 }
 
+// Copies the current time into time
+// time is an array of chars, TIMESTRINGLENGTH long.
+void timeClock_getTime(timePiece* TmPc,char* timeString)
+{
+  // Update Time
+  _timeClock_updateTime(TmPc);
+  // Copy over
+  for (uint8_t m = 0; m < TIMESTRINGLENGTH; m++)
+  {
+    timeString[m] = TmPc->currentTime[m];
+  }
+}
 
 // Get the alarm pointer
 timePiece* timeClock_getAlarm()

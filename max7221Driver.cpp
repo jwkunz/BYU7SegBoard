@@ -356,7 +356,7 @@ void MX_dispTest(bool on)
 }
 
 // Displays the chars in the string on the screen. Handles decimal point
-void MX_disp_string(const char* text,uint8_t textLength)
+void MX_disp_string(char* text,uint8_t textLength)
 {
   uint8_t digitCtr = 0;
   for (uint8_t charCtr = 0; charCtr < textLength; charCtr++)
