@@ -9,14 +9,13 @@
 
 #include "timeClock.h"
 
-#define SIXTYSECONDS 60
-#define SIXTYMINUTES 60
-#define MAX_UINT8 255
-#define MAX_UINT16 65535
-#define TWENTYFOURHOURS 24
-#define TWELVEHOURS 12
-#define ZERO_UNDERFLOW 0
-#define ONETHOUSAND_MS 1000
+// Constants for timekeeping
+#define TC_SIXTYSECONDS 60
+#define TC_SIXTYMINUTES 60
+#define TC_TWENTYFOURHOURS 24
+#define TC_TWELVEHOURS 12
+#define TC_ZERO_UNDERFLOW 0
+#define TC_ONETHOUSAND_MS 1000
 
 
 // Two clocks
@@ -46,28 +45,28 @@ void timeClock_tickFWD(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8
 { 
   // Advance Milliseconds
   TmPc->milliSeconds = TmPc->milliSeconds + numMilSecs;
-  if (TmPc->milliSeconds >= ONETHOUSAND_MS)
+  if (TmPc->milliSeconds >= TC_ONETHOUSAND_MS)
   {
     // Roll Over
-    TmPc->milliSeconds = TmPc->milliSeconds%ONETHOUSAND_MS;
+    TmPc->milliSeconds = TmPc->milliSeconds%TC_ONETHOUSAND_MS;
     // Advance Seconds
     TmPc->seconds = TmPc->seconds + numSecs;
-    if (TmPc->seconds >= SIXTYSECONDS)
+    if (TmPc->seconds >= TC_SIXTYSECONDS)
     {
       // Roll Over
-      TmPc->seconds = TmPc->seconds%SIXTYSECONDS;
+      TmPc->seconds = TmPc->seconds%TC_SIXTYSECONDS;
       // Advance Minutes
       TmPc->minutes = TmPc->minutes + numMinutes;    
-      if (TmPc->minutes >= SIXTYMINUTES)
+      if (TmPc->minutes >= TC_SIXTYMINUTES)
       {
         // Roll Over
-        TmPc->minutes = TmPc->minutes%SIXTYMINUTES;
+        TmPc->minutes = TmPc->minutes%TC_SIXTYMINUTES;
         // Advance Hours
         TmPc->hours = TmPc->hours + numHours;
-        if (TmPc->hours >= TWENTYFOURHOURS)
+        if (TmPc->hours >= TC_TWENTYFOURHOURS)
         {
           // Roll Over
-          TmPc->hours = TmPc->hours%TWENTYFOURHOURS;
+          TmPc->hours = TmPc->hours%TC_TWENTYFOURHOURS;
         }
       }
     }
@@ -79,54 +78,56 @@ void timeClock_tickREV(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8
 {
   // Advance Milliseconds
   TmPc->milliSeconds = TmPc->milliSeconds - numMilSecs;
-  if (TmPc->milliSeconds <= 0)
+  if (TmPc->milliSeconds <= TC_ZERO_UNDERFLOW)
   {
     // Roll Over
-    TmPc->milliSeconds = (ONETHOUSAND_MS-(-TmPc->milliSeconds%ONETHOUSAND_MS))%ONETHOUSAND_MS;
+    TmPc->milliSeconds = (TC_ONETHOUSAND_MS-(-TmPc->milliSeconds%TC_ONETHOUSAND_MS))%TC_ONETHOUSAND_MS;
     // Advance Seconds
     TmPc->seconds = TmPc->seconds - numSecs;
-    if (TmPc->seconds < 0)
+    if (TmPc->seconds < TC_ZERO_UNDERFLOW)
     {
       // Roll Over
-      TmPc->seconds = (SIXTYSECONDS-(-TmPc->seconds%SIXTYSECONDS))%SIXTYSECONDS;
+      TmPc->seconds = (TC_SIXTYSECONDS-(-TmPc->seconds%TC_SIXTYSECONDS))%TC_SIXTYSECONDS;
       // Advance Minutes
       TmPc->minutes = TmPc->minutes - numMinutes;
-      if (TmPc->minutes < 0)
+      if (TmPc->minutes < TC_ZERO_UNDERFLOW)
       {
         // Roll Over
-        TmPc->minutes = (SIXTYMINUTES-(-TmPc->minutes%SIXTYMINUTES))%SIXTYMINUTES;
+        TmPc->minutes = (TC_SIXTYMINUTES-(-TmPc->minutes%TC_SIXTYMINUTES))%TC_SIXTYMINUTES;
         // Advance Hours
         TmPc->hours = TmPc->hours - numHours;
-        if (TmPc->hours < 0)
+        if (TmPc->hours < TC_ZERO_UNDERFLOW)
         {
           // Roll Over
-          TmPc->hours = (TWENTYFOURHOURS-(-TmPc->hours%TWENTYFOURHOURS))%TWENTYFOURHOURS;
+          TmPc->hours = (TC_TWENTYFOURHOURS-(-TmPc->hours%TC_TWENTYFOURHOURS))%TC_TWENTYFOURHOURS;
         }
       }
     }
   }
 }
 
+// Performs conversion on internal 24 hour, to external 12 hour format
 uint8_t _timeClock_convert24hr_2_12hr(volatile uint8_t hour)
 {
   if(hour == 0)
   {
     return 12;
   }
-  if(hour > TWELVEHOURS)
+  if(hour > TC_TWELVEHOURS)
   {
-    return hour-TWELVEHOURS;
+    return hour-TC_TWELVEHOURS;
   }
   return hour;
 }
 
+// Decides AM or PM from the 24 hour internal system
 char _timeClock_AM_or_PM(volatile uint8_t hour)
 {
   if(hour == 0)
   {
     return 'A';
   }
-  if(hour >= TWELVEHOURS)
+  if(hour >= TC_TWELVEHOURS)
   {
     return 'P';
   }
@@ -149,26 +150,26 @@ void _timeClock_updateTime(timePiece* TmPc)
 }
 
 // Copies the current time into time
-// time is an array of chars, TIMESTRINGLENGTH long.
+// time is an array of chars, TC_TIME_LENGTH_STRING long.
 void _timeClock_AM_or_PM(timePiece* TmPc,char* timeString)
 {
   // Update Time
   _timeClock_updateTime(TmPc);
   // Copy over
-  for (uint8_t m = 0; m < TIMESTRINGLENGTH; m++)
+  for (uint8_t m = 0; m < TC_TIME_LENGTH_STRING; m++)
   {
     timeString[m] = TmPc->currentTime[m];
   }
 }
 
 // Copies the current time into time
-// time is an array of chars, TIMESTRINGLENGTH long.
+// time is an array of chars, TC_TIME_LENGTH_STRING long.
 void timeClock_getTime(timePiece* TmPc,char* timeString)
 {
   // Update Time
   _timeClock_updateTime(TmPc);
   // Copy over
-  for (uint8_t m = 0; m < TIMESTRINGLENGTH; m++)
+  for (uint8_t m = 0; m < TC_TIME_LENGTH_STRING; m++)
   {
     timeString[m] = TmPc->currentTime[m];
   }

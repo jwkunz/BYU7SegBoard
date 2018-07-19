@@ -8,15 +8,10 @@
 */
 
 #include "ArduinoStdInt.h"
-
-// PINS
-#define PIN_CS 5
-#define PIN_DATA_CLK 4
-#define PIN_DATA_IN 2
+#include "pinList.h"
 
 // Parameters
-#define MX_DATA_LEN 16
-#define MX_NO_SEGS 8
+#define MX_NUM_SEGMENTS 8 // Number of segments to use
 
 // Turns on = true, off = false 
 void MX_powerSwitch(bool state);
@@ -27,7 +22,7 @@ void MX_setBrightness(uint8_t brightness);
 // The number of segments to enable (0-7)
 void MX_setNoSegments(uint8_t numSegs);
 
-// The number of segments to enable (0-7)
+// Do not try and decode the characters for "code B"
 void MX_noDecode();
 
 // Toggle display test

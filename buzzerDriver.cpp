@@ -3,17 +3,13 @@
 
 #include "buzzerDriver.h"
 
-////////////////////////////////
-// Beep
-////////////////////////////////
+// Beeps quickly
 void BZ_beep()
 {
   tone(PIN_BUZZER, BZ_BEEP_FREQ_HZ, BZ_BEEP_DURATION_MS);
 }
 
-////////////////////////////////
-// Defualt Alarm
-////////////////////////////////
+// Simple alarm, drive on or off
 void BZ_alarm(bool on)
 {
 
@@ -24,64 +20,27 @@ void BZ_alarm(bool on)
 }
 
 
-////////////////////////////////
-// SONG
-////////////////////////////////
-#define BZ_SONG_BPM 120 // Not actually scaled, relative to the song programming
+// Plays BZ_SONG continously while driven on at certain rate (use in a tick function)
+#define BZ_BZ_SONG_BPM 120 // Tempo
 
 static unsigned long sound_lastTickMS = 0; // Last time the tick was called in milliseconds
 static unsigned long sound_currentMS = 0; // Current number of milliseconds since program start
 
-unsigned int noteNumber = 0; // Iterator in song array
+unsigned int noteNumber = 0; // Iterator in BZ_SONG array
 unsigned int noteBeatsLeft = 0; // Counter of number of beats to hold note.  Counts down to 0.
 unsigned int noteFrequency = 0; // Frequency of note to sustain
 
-//Emry's Song
-const unsigned int SONG[] = {
-  0, 0, // Skip First Note
-  C1, 1,
-  E1, 1,
-  G1, 1,
-  C2, 1,
-  nB1, 1,
-  nA1, 1,
-  G1, 2,
-  //
-  C1, 1,
-  E1, 1,
-  G1, 1,
-  C2, 1,
-  nB1, 1,
-  nA1, 1,
-  G1, 2,
-  //
-  C1, 1,
-  E1, 1,
-  G1, 1,
-  C2, 1,
-  E2, 1,
-  D2, 1,
-  E2, 1,
-  G2, 1,
-  E2, 2,
-  D2, 2,
-  C2, 4
+#define BZ_SONG_NUM_BYTES (sizeof(BZ_SONG)) // Memmory size of the song
+#define BZ_SONG_SIZE (BZ_SONG_NUM_BYTES/(sizeof(unsigned int))) // The length of the BZ_SONG array
+#define BZ_TICKS_PER_BEAT (GB_INTERUPTS_PER_SECOND/(BZ_BZ_SONG_BPM/60))
 
-};
-//
-//
-// End Song
-
-#define SONG_NUM_BYTES (sizeof(SONG))
-#define SONG_SIZE (SONG_NUM_BYTES/(sizeof(unsigned int))) // The length of the song array
+// This function sustains the next note of the BZ_SONG until the amound of beats left for that note is zero.
+// Each time tickBZ_SONG is called (every beat) the beat count goes down by 1.
+// After finishing a note, it advances to the next note.  It does nothing if the BZ_SONG is finished
+// When BZ_SONG is complete, return true
 
 
-// This function sustains the next note of the song until the amound of beats left for that note is zero.
-// Each time tickSong is called (every beat) the beat count goes down by 1.
-// After finishing a note, it advances to the next note.  It does nothing if the song is finished
-// When song is complete, return true
-
-bool _BZ_tickSong(const unsigned int* song)
+bool _BZ_tickBZ_SONG(const unsigned int* BZ_SONG)
 {
 
   if (noteNumber == 0) // Check for Initial State
@@ -89,12 +48,12 @@ bool _BZ_tickSong(const unsigned int* song)
     // Advance in Array
     noteNumber = noteNumber + 2;
     // Find the intial frequency
-    noteFrequency = (song)[noteNumber];
+    noteFrequency = (BZ_SONG)[noteNumber];
     // Get the initial number of beats
-    noteBeatsLeft = (song)[noteNumber + 1];
+    noteBeatsLeft = (BZ_SONG)[noteNumber + 1];
     return false; // Not Over
   }
-  else if (noteNumber >= SONG_SIZE) // SongOver
+  else if (noteNumber >= BZ_SONG_SIZE) // BZ_SONGOver
   {
     noTone(PIN_BUZZER); // Silence
     return true; // Do nothing
@@ -121,9 +80,9 @@ bool _BZ_tickSong(const unsigned int* song)
       // Advance in Array
       noteNumber = noteNumber + 2;
       // Find the new frequency
-      noteFrequency = (song)[noteNumber];
+      noteFrequency = (BZ_SONG)[noteNumber];
       // Get the new number of beats
-      noteBeatsLeft = (song)[(noteNumber + 1)];
+      noteBeatsLeft = (BZ_SONG)[(noteNumber + 1)];
     }
 
     return false; // Not Over
@@ -132,35 +91,36 @@ bool _BZ_tickSong(const unsigned int* song)
 }
 
 // Counts ticks for the tempo
-uint8_t BZ_songTickCounter = 0;
+uint8_t BZ_BZ_SONGTickCounter = 0;
 
-// Plays song continously while driven on
-void BZ_alarmSong(bool on)
+// Plays BZ_SONG continously while driven on
+void BZ_alarmBZ_SONG(bool on)
 {
 
   if (on)
   {
-    BZ_songTickCounter++;
-    if (BZ_songTickCounter>BZ_TICKS_PER_BEAT)
+    BZ_BZ_SONGTickCounter++;
+    if (BZ_BZ_SONGTickCounter>BZ_TICKS_PER_BEAT)
     {
-      if(_BZ_tickSong(SONG))
+      if(_BZ_tickBZ_SONG(BZ_SONG))
       {
         // Reset and repeat
         noteNumber = 0;
         noteBeatsLeft = 0;
         noteFrequency = 0; ;
       }
-      BZ_songTickCounter = 0;
+      BZ_BZ_SONGTickCounter = 0;
     }
   }
   else
     noTone(PIN_BUZZER); 
 }
 
+// Init buzzer
 void BZ_init()
 {
   pinMode(PIN_BUZZER, OUTPUT);
-  BZ_songTickCounter = 0;
+  BZ_BZ_SONGTickCounter = 0;
   BZ_beep();
 }
 

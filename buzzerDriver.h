@@ -3,18 +3,14 @@
 
 #include "Arduino.h"
 #include "ArduinoStdInt.h"
-
-#define PIN_BUZZER 6
-#define INTERUPT_PERIOD_US 50000
-#define INTERUPTS_PER_SECOND (1E6/INTERUPT_PERIOD_US)
+#include "pinList.h"
+#include "globalParameters.h"
 
 #define BZ_BEEP_FREQ_HZ 2000
 #define BZ_BEEP_DURATION_MS 100
-#define BZ_CHIME_DURATION_MS 1000
 
-// Song Parameters
-#define BZ_SONG_BPM 120 // Song Tempo
-#define BZ_TICKS_PER_BEAT (INTERUPTS_PER_SECOND/(BZ_SONG_BPM/60))
+// BZ_SONG Parameters
+#define BZ_BZ_SONG_BPM 120 // BZ_SONG Tempo
 
 // Beeps quickly
 void BZ_beep();
@@ -22,11 +18,15 @@ void BZ_beep();
 // Simple alarm, drive on or off
 void BZ_alarm(bool on);
 
-// Plays song continously while driven on
-void BZ_alarmSong(bool on);
+// Plays BZ_SONG continously while driven on at certain rate (use in a tick function)
+void BZ_alarmBZ_SONG(bool on);
 
 // Init the buzzer
 void BZ_init();
+
+
+/// PROGRAM THE MUSIC BELOW
+
 
 // Notes
 #define C1   261
@@ -54,6 +54,39 @@ void BZ_init();
 #define nB2   988
 #define C3   1047
 
+// Emry's BZ_SONG
+const unsigned int BZ_SONG[] = {
+  0, 0, // Skip First Note
+  C1, 1,
+  E1, 1,
+  G1, 1,
+  C2, 1,
+  nB1, 1,
+  nA1, 1,
+  G1, 2,
+  //
+  C1, 1,
+  E1, 1,
+  G1, 1,
+  C2, 1,
+  nB1, 1,
+  nA1, 1,
+  G1, 2,
+  //
+  C1, 1,
+  E1, 1,
+  G1, 1,
+  C2, 1,
+  E2, 1,
+  D2, 1,
+  E2, 1,
+  G2, 1,
+  E2, 2,
+  D2, 2,
+  C2, 4
+
+};
+// End BZ_SONG
 
 
 #endif

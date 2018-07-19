@@ -7,38 +7,30 @@
 #include "max7221Driver.h"
 #include "buttonHandler.h"
 #include "buzzerDriver.h"
-
-// General Parameters
-#define INTERUPT_PERIOD_US 50000
-#define INTERUPTS_PER_SECOND (1E6/INTERUPT_PERIOD_US)
-#define DISP_STRING_LEN 10
+#include "globalParameters.h"
 
 // Clock Start Parameters
-#define START_HOURS 0
-#define START_MIN 0
-#define START_SEC 0
+#define UI_CLK_START_HOURS 0
+#define UI_CLK_START_MINUTES 0
+#define UI_CLK_START_SECONDS 0
 
+// Twelve Hour Format, or 24 hour?
+#define UI_12HR_FLAG (true)
+
+// Alarm Start Parameters
+#define UI_ALARM_START_HOURS 5
+#define UI_ALARM_START_MINUTES 0
+#define UI_ALARM_START_SECONDS 0
 
 // State Timing
-#define DISP_UPDATE_TICKS (INTERUPTS_PER_SECOND)
-#define DISP_FLASH_TICKS (INTERUPTS_PER_SECOND*1/20)
+#define DISP_UPDATE_TICKS (GB_INTERUPTS_PER_SECOND)
+#define DISP_FLASH_TICKS (GB_INTERUPTS_PER_SECOND*1/20)
 
-// Saves the display time as timeOnDisplay
-void ui_storeDispTime(char* disp_time);
-
-// A debug print
-void ui_printDisp(char* dispString);
-
-// Updates the display
+// Updates the display with data from the time piece
 void ui_updateDisplay(timePiece* TmPc);
-
-// Checks if the alarm should go
-bool ui_checkForAlarmTrigger();
 
 // Tick function for the user interface
 void ui_tick();
-
-// Getters //
 
 // Get the alarm status
 bool ui_getAlarmStatus();

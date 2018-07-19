@@ -2,16 +2,8 @@
 #define buttonHandler_h
 
 #include "ArduinoStdInt.h"
+#include "pinList.h"
 #include "Arduino.h"
-
-#define PIN_BTN_0 A0
-#define PIN_BTN_1 A1
-#define PIN_BTN_2 A2
-#define PIN_BTN_3 A3
-#define PIN_BTN_4 A4
-#define PIN_BTN_5 A5
-#define PIN_SW_0 A6
-
 
 // INIT FUNCTION
 void BH_initAll();

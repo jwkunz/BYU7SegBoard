@@ -9,21 +9,31 @@
 
 #include "max7221Driver.h"
 
-// ADDRESS CODES:
+// Parameters
+#define MX_DATA_LEN 16
+
+// ADDRESS CODES //////////
+///////////////////////////
+
+// Defualt
 #define MX_ADDR_NO_OPT 0x0
 
+// Brightness
 #define MX_ADDR_INTENSITY 0x0A
 #define MX_MAX_BRIGHT 15
 #define MX_MIN_BRIGHT 1
 
+// Power
 #define MX_ADDR_SHUTDOWN 0x0C
 #define MX_DATA_OFF 0x00
 #define MX_DATA_ON 0x01
 
+// Display Test
 #define MX_ADDR_DISPTEST 0x0F
 #define MX_DATA_DISPTEST_NORMAL 0x00
 #define MX_DATA_DISPTEST_MODE 0x01
 
+// Code B decode
 #define MX_ADDR_DECODE_MODE 0x09
 #define MX_DATA_NO_DECODE 0x00
 #define MX_DATA_CODEB_FLAG_DG0 0x01
@@ -47,8 +57,10 @@
 #define MX_DATA_CODEB_CHAR_P 0x0E
 #define MX_DATA_CODEB_CHAR_BLANK 0x0F
 
+// Scan size
 #define MX_ADDR_SCANLIM 0x0B
 
+// Decimal Point
 #define MX_MASK_DP 0x80
 
 // Start Up
@@ -64,6 +76,8 @@ uint16_t _MX_formCode(uint8_t address,uint8_t data)
 // Returns a seven segment data code for a given char
 uint8_t _MX_decodeChar(char d)
 {
+
+// Character Codes
 #define MX_CHAR_0 0x7E
 #define MX_CHAR_1 0x30
 #define MX_CHAR_2 0x6D
@@ -105,7 +119,7 @@ uint8_t _MX_decodeChar(char d)
 #define MX_CHAR_EXCLAMATION_POINT 0xA0
 
 
-  
+  // Pick the character, and return the appropriate code
   switch(d){
     case '0':
     return MX_CHAR_0;
@@ -300,20 +314,17 @@ uint8_t _MX_getBits(uint16_t data,uint8_t pos_end,int8_t pos_start)
  */
 void _MX_SendData(uint16_t data)
 {
-  //Serial.println("Starting Sending Data...");
   digitalWrite(PIN_DATA_CLK,LOW);
   digitalWrite(PIN_CS,LOW);
   for (uint8_t m = 0; m < MX_DATA_LEN; m++)
   {
     uint8_t p = MX_DATA_LEN-1-m;
     uint8_t b = _MX_getBits(data,p,p);
-    //Serial.print(b);
     digitalWrite(PIN_DATA_IN,b);
     digitalWrite(PIN_DATA_CLK,HIGH);
     digitalWrite(PIN_DATA_CLK,LOW);
   }
   digitalWrite(PIN_CS,HIGH);
-  //Serial.println("\nData Sent");
 }
 
 
@@ -388,6 +399,7 @@ void MX_disp_string(char* text,uint8_t textLength)
   }
 }
 
+// Send a blank screen
 void MX_writeBLANK()
 {
   char blank[8] = {' ',' ',' ',' ',' ',' ',' ',' ',};
@@ -397,36 +409,18 @@ void MX_writeBLANK()
 // Init Settings
 void MX_init()
 {
-  Serial.println("Initing MX...");
-
   // INIT PINS
   pinMode(PIN_DATA_IN,OUTPUT);
   pinMode(PIN_DATA_CLK,OUTPUT);
   pinMode(PIN_CS,OUTPUT);
 
-  // INIT DEVICE
-
-  Serial.println("NO DECODE");
+  // Initial Setting for screen
   MX_noDecode();
-
-  Serial.println("NO SEGS");
-  MX_setNoSegments(MX_NO_SEGS-1);
-
-  Serial.println("BRIGHTNESS");
+  MX_setNoSegments(MX_NUM_SEGMENTS-1);
   MX_setBrightness(MX_MIN_BRIGHT);
-
-  Serial.println("START STRING");
   MX_disp_string(MX_STARTUP,MX_STARTUP_LENGTH);
-
-  Serial.println("DISP TEST OFF");
   MX_dispTest(false);
-
-  Serial.println("INIT POWER");
-  MX_powerSwitch(true);
-  
-
-  
-  Serial.println("MX inited");
+  MX_powerSwitch(true);   
 }
 
 #endif

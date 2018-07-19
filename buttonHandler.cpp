@@ -3,11 +3,12 @@
 
 #include "buttonHandler.h"
 
+// The Number of IO
 #define BH_NUMIO 6
+// The length of a char
 #define BH_CHARLEN 7
-
+// The threshold voltage on the analog pins for a high
 #define BH_VTHRESHOLD 100
-
 
 // INIT FUNCTION
 void BH_initAll()

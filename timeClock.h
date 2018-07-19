@@ -10,16 +10,17 @@
 #include "ArduinoStdInt.h"
 #include "Arduino.h"
 
-#define TIMESTRINGLENGTH 16
+// The length of the string containing current time
+#define TC_TIME_LENGTH_STRING 16
 
 // Data struct for the time clock
 struct timePiece { 
   int16_t milliSeconds;
-  int8_t seconds;
-  int8_t minutes;
-  int8_t hours;
-  char currentTime[TIMESTRINGLENGTH];
-  bool twelveHour_flag;
+  int8_t seconds; // Number of seconds
+  int8_t minutes; // Number of minutes
+  int8_t hours; // Number of hours (internally stored in 24 hour format)
+  char currentTime[TC_TIME_LENGTH_STRING]; // String with the current time
+  bool twelveHour_flag; // Twelve hour or no
 };
 
 // Get the alarm clock pointer
@@ -45,7 +46,7 @@ void timeClock_tickFWD(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8
 void timeClock_tickREV(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours);
 
 // Copies the current time into time
-// time is an array of chars, TIMESTRINGLENGTH long.
+// time is an array of chars, TC_TIME_LENGTH_STRING long.
 void timeClock_getTime(timePiece* TmPc,char* timeString);
 
 

@@ -6,7 +6,8 @@
 #include "timeClock.h"
 #include "max7221Driver.h"
 
-
+// General Parameters
+#define DISP_STRING_LEN 10
 
 // States
 #define UI_INIT_S 0
@@ -41,20 +42,17 @@ uint8_t ui_buttonRelease_ButtonNum = 0;
 // The time piece to set
 timePiece* settingTimePiece = timeClock_getClock();
 
-// Settings
-#define UI_12HR_FLAG (true)
-
 // Status Flags
 bool soundAlarm_flag = false;
 bool tickClock_flag = true;
 
-
+// Time on display as a string
 char timeOnDisplay[DISP_STRING_LEN] = {0};
-//////////////////
+///////////////////////////////////////////////
 
 
 // Saves the display time as timeOnDisplay
-void ui_storeDispTime(char* disp_time)
+void _ui_storeDispTime(char* disp_time)
 {
   for (uint8_t m = 0; m < DISP_STRING_LEN; m++)
     timeOnDisplay[m] = disp_time[m];
@@ -62,21 +60,19 @@ void ui_storeDispTime(char* disp_time)
 
 
 // A debug print
-void ui_printDisp(char* dispString)
+void _ui_printDisp(char* dispString)
 {
   for (uint8_t m = 0; m < DISP_STRING_LEN; m++)
   {
     Serial.print(dispString[m]);
   }
-  //Serial.println(" ");
 }
-
 
 // Updates the display
 void ui_updateDisplay(timePiece* TmPc)
 {
   // Get the current time
-  char timeString[TIMESTRINGLENGTH] = {0};
+  char timeString[TC_TIME_LENGTH_STRING] = {0};
   timeClock_getTime(TmPc,timeString);
 
   // Extract characters
@@ -101,17 +97,13 @@ void ui_updateDisplay(timePiece* TmPc)
   // Print Text to Seven Segment
   MX_disp_string(dispString, DISP_STRING_LEN);
   // Store Time
-  ui_storeDispTime(dispString);
-
-
-  // DEBUG, Print time
-  //ui_printDisp(dispString);
+  _ui_storeDispTime(dispString);
 }
 
 
 
 // Checks if the alarm should go
-bool ui_checkForAlarmTrigger()
+bool _ui_checkForAlarmTrigger()
 {
   // Check if alarm is set
   if (BH_getAnIO('S', 0) == 0)
@@ -126,7 +118,6 @@ bool ui_checkForAlarmTrigger()
   if(timeClock_getClock()->seconds != timeClock_getAlarm()->seconds)
     return false;
   // Times match (not milliseconds)
-  Serial.println("Alarm Match!");
   return true;
 }
 
@@ -142,12 +133,14 @@ void ui_tick()
     // Intialize everything
     case (UI_INIT_S):
       // Action //
-      timeClock_init(timeClock_getClock(),INTERUPTS_PER_SECOND, UI_12HR_FLAG, START_SEC, START_MIN, START_HOURS);
-      timeClock_init(timeClock_getAlarm(),INTERUPTS_PER_SECOND, UI_12HR_FLAG, START_SEC+5, START_MIN, START_HOURS);
+      // Start clock
+      timeClock_init(timeClock_getClock(),GB_INTERUPTS_PER_SECOND, UI_12HR_FLAG, UI_CLK_START_SECONDS, UI_CLK_START_MINUTES, UI_CLK_START_HOURS);
+      // Start alarm
+      timeClock_init(timeClock_getAlarm(),GB_INTERUPTS_PER_SECOND, UI_12HR_FLAG, UI_ALARM_START_SECONDS, UI_ALARM_START_MINUTES, UI_ALARM_START_HOURS);
       ui_updateDisp_ctr = 0;
       tickClock_flag = true;
       // Pre-seed at half duty.
-      ui_flashDisp_ctr = (INTERUPTS_PER_SECOND/2);
+      ui_flashDisp_ctr = (GB_INTERUPTS_PER_SECOND/2);
       // Advance //
       ui_currentState = UI_IDLE_S;
       break;
@@ -170,7 +163,6 @@ void ui_tick()
         ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
         // Stop ticking clock
         tickClock_flag = false;
-        //Serial.println("Moving to set Hours");
         // Setting the main time piece (TM) 
         settingTimePiece = timeClock_getClock();
         break;
@@ -186,21 +178,18 @@ void ui_tick()
         ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
         // Keep ticking clock
         tickClock_flag = true;
-        //Serial.println("Moving to set Hours");
         // Setting the main time piece (TM) 
         settingTimePiece = timeClock_getAlarm();
         break;
       }
-
       
       // Check for alarm
-      if (ui_checkForAlarmTrigger())
+      if (_ui_checkForAlarmTrigger())
       {
         ui_currentState = UI_DRIVE_ALARM_S;
         soundAlarm_flag = true;
         break;
       }
-
       
       // Update Display after so many ticks
       if (ui_updateDisp_ctr >= DISP_UPDATE_TICKS)
@@ -230,18 +219,19 @@ void ui_tick()
         soundAlarm_flag = false;
       }
       // Update Alarm
-      BZ_alarmSong(soundAlarm_flag);
+      BZ_alarmBZ_SONG(soundAlarm_flag);
       break;
 
     //////////////////////
     // Wait for release
     case (UI_SET_BUTTON_RELEASE_S):
+      // If held, stay
       if (BH_getAnIO('B',ui_buttonRelease_ButtonNum))
       {
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
         MX_dispTest(true);
       }
-      else
+      else // Button released
       {
         ui_currentState = ui_buttonRelease_NextState;
         MX_dispTest(false);
@@ -252,19 +242,16 @@ void ui_tick()
     // Set seconds
     case (UI_SET_TIME_SECONDS_S):
       // Action //
-      //Serial.println("Inside set seconds");
-
+      
       // Increase
       if (UI_B2)
       {
-        timeClock_tickFWD(settingTimePiece,1000,1,0,0);
-        //Serial.println("seconds++");
+        timeClock_tickFWD(settingTimePiece,1000,1,0,0);        
       }
       // Decrease
       else if (UI_B1)
       {
-        timeClock_tickREV(settingTimePiece,1000,1,0,0);
-        //Serial.println("seconds--");
+        timeClock_tickREV(settingTimePiece,1000,1,0,0);     
       }
 
 
@@ -273,7 +260,6 @@ void ui_tick()
       // Exit Set Mode Time Mode
       if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 5;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -285,7 +271,6 @@ void ui_tick()
       // Exit Set Mode Alarm Mode
       if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 4;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -298,7 +283,6 @@ void ui_tick()
       // Left
       if (UI_B3)
       {
-        //Serial.println("Going to Minutes");
         ui_buttonRelease_ButtonNum = 3;
         ui_buttonRelease_NextState = UI_SET_TIME_MINUTES_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
@@ -307,7 +291,6 @@ void ui_tick()
       // Right
       if (UI_B0)
       {
-        //Serial.println("Going to AMPM");
         ui_buttonRelease_ButtonNum = 0;
         ui_buttonRelease_NextState = UI_SET_TIME_AMPM_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
@@ -325,19 +308,15 @@ void ui_tick()
     case (UI_SET_TIME_MINUTES_S):
       // Action //
 
-      //Serial.println("Inside set Minutes");
-
       // Increase
       if (UI_B2)
       {
         timeClock_tickFWD(settingTimePiece,1000,60,1,0);
-        //Serial.println("Minutes++");
       }
       // Decrease
       else if (UI_B1)
       {
         timeClock_tickREV(settingTimePiece,1000,60,1,0);
-        //Serial.println("Minutes--");
       }
 
       // Advance //
@@ -345,7 +324,6 @@ void ui_tick()
       // Exit Set Mode Time Mode
       if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 5;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -357,7 +335,6 @@ void ui_tick()
       // Exit Set Mode Alarm Mode
       if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 4;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -370,7 +347,6 @@ void ui_tick()
       // Left
       if (UI_B3)
       {
-        //Serial.println("Going to Hours");
         ui_buttonRelease_ButtonNum = 3;
         ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
@@ -379,7 +355,6 @@ void ui_tick()
       // Right
       if (UI_B0)
       {
-        //Serial.println("Going to Seconds");
         ui_buttonRelease_ButtonNum = 0;
         ui_buttonRelease_NextState = UI_SET_TIME_SECONDS_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
@@ -397,26 +372,22 @@ void ui_tick()
     // Set Hours
     case (UI_SET_TIME_HOURS_S):
       // Action //
-      //Serial.println("Inside set Hours");
 
       // Increase
       if (UI_B2)
       {
         timeClock_tickFWD(settingTimePiece,1000,60,60,1);
-        //Serial.println("Hours++");
       }
       // Decrease
       else if (UI_B1)
       {
         timeClock_tickREV(settingTimePiece,1000,60,60,1);
-        //Serial.println("Hours--");
       }
 
       // Advance //
       // Exit Set Mode Time Mode
       if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 5;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -428,7 +399,6 @@ void ui_tick()
       // Exit Set Mode Alarm Mode
       if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 4;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -441,7 +411,6 @@ void ui_tick()
       // Left
       if (UI_B3)
       {
-        //Serial.println("Going to AMPM");
         ui_buttonRelease_ButtonNum = 3;
         ui_buttonRelease_NextState = UI_SET_TIME_AMPM_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
@@ -450,7 +419,6 @@ void ui_tick()
       // Right
       if (UI_B0)
       {
-        //Serial.println("Going to Minutes");
         ui_buttonRelease_ButtonNum = 0;
         ui_buttonRelease_NextState = UI_SET_TIME_MINUTES_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
@@ -467,19 +435,16 @@ void ui_tick()
     // Set AM or PM
     case (UI_SET_TIME_AMPM_S):
       // Action //
-      //Serial.println("Inside set AMPM");
 
       // Increase
       if (UI_B2)
       {
         timeClock_tickFWD(settingTimePiece,1000,60,60,12);
-        //Serial.println("AMPM++");
       }
       // Decrease
       else if (UI_B1)
       {
         timeClock_tickREV(settingTimePiece,1000,60,60,12);
-        //Serial.println("AMPM--");
       }
 
       // Advance //
@@ -487,7 +452,6 @@ void ui_tick()
       // Exit Set Mode Time Mode
       if ((UI_B5)&&(settingTimePiece==timeClock_getClock()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 5;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -499,7 +463,6 @@ void ui_tick()
       // Exit Set Mode Alarm Mode
       if ((UI_B4)&&(settingTimePiece==timeClock_getAlarm()))
       {
-        //Serial.println("Leaving to Idle");
         // Set up the button release parameters
         ui_buttonRelease_ButtonNum = 4;
         ui_buttonRelease_NextState = UI_IDLE_S;
@@ -512,7 +475,6 @@ void ui_tick()
       // Left
       if (UI_B3)
       {
-        //Serial.println("Going to Seconds");
         ui_buttonRelease_ButtonNum = 3;
         ui_buttonRelease_NextState = UI_SET_TIME_SECONDS_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
@@ -521,13 +483,11 @@ void ui_tick()
       // Right
       if (UI_B0)
       {
-        //Serial.println("Going to Hours");
         ui_buttonRelease_ButtonNum = 0;
         ui_buttonRelease_NextState = UI_SET_TIME_HOURS_S;
         ui_currentState = UI_SET_BUTTON_RELEASE_S;
         break;
       }
-
 
       // Flash if nothing else
       ui_flashLastState = UI_SET_TIME_AMPM_S;
@@ -539,7 +499,7 @@ void ui_tick()
     // MAKE FLASHING
     case (UI_SET_FLASH_S):
       // Action //
-      ui_flashDisp_ctr= (ui_flashDisp_ctr+1)%int(INTERUPTS_PER_SECOND);
+      ui_flashDisp_ctr= (ui_flashDisp_ctr+1)%int(GB_INTERUPTS_PER_SECOND);
       if(ui_flashDisp_ctr<DISP_FLASH_TICKS)
         MX_writeBLANK();
       else
