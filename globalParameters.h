@@ -17,13 +17,13 @@
 // +50 is fast
 // +100 is fast
 // +104 is fast
-// +105 is
-// +106 is slow
+// +105 is fast 2 seconds over 15 hours
+// +106 is slow 
 // +108 is slow 
 // +115 is slow
 // +128 is slow
 */
-#define GB_INTERUPT_TUNE_FACTOR (+105)
+#define GB_INTERUPT_TUNE_FACTOR (+106)
 
 
 
