@@ -33,7 +33,7 @@ uint8_t _BH_readIO(uint8_t pin)
 uint8_t BH_readAll()
 {
 	// Init IO
-	uint8_t io = 1;
+	uint8_t io = 0;
 	// Read Value
 	uint8_t read = _BH_readIO(PIN_SW_0);
 	// Shift and add
