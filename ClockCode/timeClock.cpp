@@ -31,7 +31,7 @@ timePiece ALARM_CLK;
   // minutes: Initial minutes, 0-59
   // hours: Initial hours in 24 hour format, 0-23
 */
-void timeClock_init(timePiece* TmPc,uint16_t ticksPerSec, bool twelveHour_flag, uint8_t seconds, uint8_t minutes, uint8_t hours)
+void timeClock_init(timePiece* TmPc,int16_t ticksPerSec, bool twelveHour_flag, int8_t seconds, int8_t minutes, int8_t hours)
 {
   TmPc->twelveHour_flag = twelveHour_flag;
   TmPc->milliSeconds = 0;
@@ -41,7 +41,7 @@ void timeClock_init(timePiece* TmPc,uint16_t ticksPerSec, bool twelveHour_flag, 
 }
 
 // Moves clock forward the given amount
-void timeClock_tickFWD(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
+void timeClock_tickFWD(timePiece* TmPc,int16_t numMilSecs,int8_t numSecs,int8_t numMinutes,int8_t numHours)
 { 
   // Advance Milliseconds
   TmPc->milliSeconds = TmPc->milliSeconds + numMilSecs;
@@ -74,32 +74,32 @@ void timeClock_tickFWD(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8
 }
 
 // Move the clock backward the given amount
-void timeClock_tickREV(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours)
+void timeClock_tickREV(timePiece* TmPc,int16_t numMilSecs,int8_t numSecs,int8_t numMinutes,int8_t numHours)
 {
   // Advance Milliseconds
   TmPc->milliSeconds = TmPc->milliSeconds - numMilSecs;
-  if (TmPc->milliSeconds <= TC_ZERO_UNDERFLOW)
+  if (TmPc->milliSeconds < TC_ZERO_UNDERFLOW)
   {
     // Roll Over
-    TmPc->milliSeconds = (TC_ONETHOUSAND_MS-(-TmPc->milliSeconds%TC_ONETHOUSAND_MS))%TC_ONETHOUSAND_MS;
+    TmPc->milliSeconds = (TC_ONETHOUSAND_MS-((-TmPc->milliSeconds)%TC_ONETHOUSAND_MS))%TC_ONETHOUSAND_MS;
     // Advance Seconds
     TmPc->seconds = TmPc->seconds - numSecs;
     if (TmPc->seconds < TC_ZERO_UNDERFLOW)
     {
       // Roll Over
-      TmPc->seconds = (TC_SIXTYSECONDS-(-TmPc->seconds%TC_SIXTYSECONDS))%TC_SIXTYSECONDS;
+      TmPc->seconds = (TC_SIXTYSECONDS-((-TmPc->seconds)%TC_SIXTYSECONDS))%TC_SIXTYSECONDS;
       // Advance Minutes
       TmPc->minutes = TmPc->minutes - numMinutes;
       if (TmPc->minutes < TC_ZERO_UNDERFLOW)
       {
         // Roll Over
-        TmPc->minutes = (TC_SIXTYMINUTES-(-TmPc->minutes%TC_SIXTYMINUTES))%TC_SIXTYMINUTES;
+        TmPc->minutes = (TC_SIXTYMINUTES-((-TmPc->minutes)%TC_SIXTYMINUTES))%TC_SIXTYMINUTES;
         // Advance Hours
         TmPc->hours = TmPc->hours - numHours;
         if (TmPc->hours < TC_ZERO_UNDERFLOW)
         {
           // Roll Over
-          TmPc->hours = (TC_TWENTYFOURHOURS-(-TmPc->hours%TC_TWENTYFOURHOURS))%TC_TWENTYFOURHOURS;
+          TmPc->hours = (TC_TWENTYFOURHOURS-((-TmPc->hours)%TC_TWENTYFOURHOURS))%TC_TWENTYFOURHOURS;
         }
       }
     }

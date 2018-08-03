@@ -37,13 +37,13 @@ timePiece* timeClock_getClock();
   // minutes: Initial minutes, 0-59
   // hours: Initial hours in 24 hour format, 0-23
 */
-void timeClock_init(timePiece* TmPc,uint16_t ticksPerSec, bool twelveHour_flag, uint8_t seconds, uint8_t minutes, uint8_t hours);
+void timeClock_init(timePiece* TmPc,int16_t ticksPerSec, bool twelveHour_flag, int8_t seconds, int8_t minutes, int8_t hours);
 
 // Moves clock forward the given amount
-void timeClock_tickFWD(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours);
+void timeClock_tickFWD(timePiece* TmPc,int16_t numMilSecs,int8_t numSecs,int8_t numMinutes,int8_t numHours);
 
 // Move the clock backward the given amount
-void timeClock_tickREV(timePiece* TmPc,uint16_t numMilSecs,uint8_t numSecs,uint8_t numMinutes,uint8_t numHours);
+void timeClock_tickREV(timePiece* TmPc,int16_t numMilSecs,int8_t numSecs,int8_t numMinutes,int8_t numHours);
 
 // Copies the current time into time
 // time is an array of chars, TC_TIME_LENGTH_STRING long.
