@@ -21,7 +21,6 @@ void BZ_alarm(bool on)
 
 
 // Plays BZ_SONG continously while driven on at certain rate (use in a tick function)
-#define BZ_BZ_SONG_BPM 120 // Tempo
 
 static unsigned long sound_lastTickMS = 0; // Last time the tick was called in milliseconds
 static unsigned long sound_currentMS = 0; // Current number of milliseconds since program start
@@ -32,7 +31,8 @@ unsigned int noteFrequency = 0; // Frequency of note to sustain
 
 #define BZ_SONG_NUM_BYTES (sizeof(BZ_SONG)) // Memmory size of the song
 #define BZ_SONG_SIZE (BZ_SONG_NUM_BYTES/(sizeof(unsigned int))) // The length of the BZ_SONG array
-#define BZ_TICKS_PER_BEAT (GB_INTERUPTS_PER_SECOND/(BZ_BZ_SONG_BPM/60))
+// Adapted for tempo, the quarter note gets the beat when considering tempo
+#define BZ_TICKS_PER_BEAT (GB_INTERUPTS_PER_SECOND/((BZ_SONG_BPM*QUARTER_NOTE)/60)) 
 
 // This function sustains the next note of the BZ_SONG until the amound of beats left for that note is zero.
 // Each time tickBZ_SONG is called (every beat) the beat count goes down by 1.
