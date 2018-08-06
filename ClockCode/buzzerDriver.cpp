@@ -32,7 +32,7 @@ unsigned int noteFrequency = 0; // Frequency of note to sustain
 #define BZ_SONG_NUM_BYTES (sizeof(BZ_SONG)) // Memmory size of the song
 #define BZ_SONG_SIZE (BZ_SONG_NUM_BYTES/(sizeof(unsigned int))) // The length of the BZ_SONG array
 // Adapted for tempo, the quarter note gets the beat when considering tempo
-#define BZ_TICKS_PER_BEAT (GB_INTERUPTS_PER_SECOND/((BZ_SONG_BPM*QUARTER_NOTE)/60)) 
+#define BZ_TICKS_PER_BEAT ((GB_INTERUPTS_PER_SECOND*60)/(BZ_SONG_BPM*QUARTER_NOTE)) 
 
 // This function sustains the next note of the BZ_SONG until the amound of beats left for that note is zero.
 // Each time tickBZ_SONG is called (every beat) the beat count goes down by 1.

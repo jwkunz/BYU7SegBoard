@@ -9,9 +9,6 @@
 #define BZ_BEEP_FREQ_HZ 2000
 #define BZ_BEEP_DURATION_MS 100
 
-// BZ_SONG Parameters
-#define BZ_SONG_BPM 120 // BZ_SONG Tempo, relative to quarter note
-
 // Beeps quickly
 void BZ_beep();
 
@@ -74,7 +71,13 @@ the quarter note gets the beat.  There are no measures, just notes.
 
 */
 
-// Emry's BZ_SONG
+// BZ_SONG Parameters
+#define BZ_SONG_BPM 200 // BZ_SONG Tempo, relative to quarter note
+// Note: The faster the tick rate, the more accurate the BPM.  
+// The shortest a 32nd note can be is one tick.
+
+// BZ_SONG
+// Title: Emry
 const unsigned int BZ_SONG[] = 
 { NOTE_REST, BREATH_MARK, // Skip First Note
   NOTE_C4, QUARTER_NOTE,
@@ -103,8 +106,8 @@ const unsigned int BZ_SONG[] =
   NOTE_D5, QUARTER_NOTE,
   NOTE_E5, QUARTER_NOTE,
   NOTE_G5, QUARTER_NOTE,
-  NOTE_E5, QUARTER_NOTE,
-  NOTE_D5, QUARTER_NOTE,
+  NOTE_E5, HALF_NOTE,
+  NOTE_D5, HALF_NOTE,
   NOTE_C5, WHOLE_NOTE,
   NOTE_REST, BREATH_MARK };
 // End BZ_SONG
