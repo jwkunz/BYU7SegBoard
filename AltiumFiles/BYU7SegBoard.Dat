@@ -1,0 +1,18 @@
+﻿Field=#~Integer~#~50|Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|Field=Supplier Subtotal 1~Float~Supplier Subtotal 1~100|Field=Supplier Subtotal per Board 1~Float~Supplier Subtotal per Board 1~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~BYU7SegBoard.PrjPCB|ReportField=ProjectFullPath~C:\Users\JakeKunzler\Documents\GitHub\BYU7SegBoard\AltiumFiles\BYU7SegBoard.PrjPCB|ReportField=Title~Bill of Materials For Project [BYU7SegBoard.PrjPCB] (No PCB Document Selected)|ReportField=ReportTime~8:25:32 AM|ReportField=ReportDate~8/7/2018|ReportField=ReportDateTime~8/7/2018 8:25:32 AM|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=TotalQuantity~26|ReportField=TotalActualPrice~0|ReportField=TotalTargetPrice~0|ReportField=VersionControl_RevNumber~|ReportField=VersionControl_ProjFolderRevNumber~9de86920682ae64a7a95984639ed97ea90e03989|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=Application_BuildNumber~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~8/7/2018|ReportField=CurrentTime~8:22:04 AM|ReportField=Date~|ReportField=DocumentFullPathAndName~C:\Users\JakeKunzler\Documents\GitHub\BYU7SegBoard\AltiumFiles\TopLevel.SchDoc|ReportField=DocumentName~TopLevel.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~8/7/2018|ReportField=Organization~|ReportField=ProjectName~BYU7SegBoard.PrjPCB|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~BYU7SegBoard.PrjPCB|ReportField=DataSourceFullPath~C:\Users\JakeKunzler\Documents\GitHub\BYU7SegBoard\AltiumFiles\BYU7SegBoard.PrjPCB|ReportField=PCBConfigurationName~Sources|ReportField=Item~|ReportField=ItemRevision~|ReportField=ItemAndRevision~|ReportField=ItemRevisionBase~|ReportField=ItemRevisionLevel1~|ReportField=ItemRevisionLevel2~|ReportField=ItemRevisionLevel1AndBase~|ReportField=ItemRevisionLevel2AndLevel1~
+1|DFR0010|DFRDUINO NANO V3.1 (ARDUINO NANO|A1|ArduinoNano|ArduinoNano|1||
+2|COM-09190|Momentary Pushbutton Switch - 12mm Square|B0, B1, B2, B3, B4, B5|COM-09190|Push Button_Tactile|6||
+3|PS1240P02BT|Piezo Buzzer, Through Hole|BZ1|PS1240P02BT|PS12|1||
+4|PJ-037A|CONN PWR JACK 2X5.5MM SOLDER|DC1|PJ-037A|DCpowerBarrel|1||
+5|68016-210HLF|Header 10 Right Angle 100 mil|H1|Header1X10|Header 10 Right Angle 100 mil|1||
+6|LTL-4223|2 V drop 10 mA Red|LED1, LED2|LED Through|LED_RED|2||
+7|3310R-125-103L|POT 10K OHM 1/4W PLASTIC LINEAR|POT1|3310R-001|Potentiometer - 10k|1||
+8|200MSP1T1B1M2QEH|SWITCH TOGGLE SPDT 3A 120V|PWRSW|200MSP1T1B1M2QEH|PowerSwitch|1||
+9|2N3904BU|TRANS NPN 40V 0.2A TO-92|Q1|2N3904|2N3904|1||
+10|100|CF14JT100R|R1, R5|Resistor Through Hole|Resistor_100|2||
+11|9.53k|MFR-25FBF52-9K53|R2|Resistor Through Hole|Resistor_9.53k|1||
+12|1k|CF14JT1K00|R3, R4|Resistor Through Hole|Resistor_1k|2||
+13|18|CF14JT18R0|R6|Resistor Through Hole|Resistor_18|1||
+14|4116R-2-103LF||RP1|4100R|ResistorPack15|1||
+15|LDQ-N516RI|LED 7-SEG .56 QUAD S-RED CC MULT|S1, S2|LDQ-516RI|SevenSegment|2||
+16|SLG12014|SWITCH SLIDE SPDT 300MA 125V|SW0|SLG12014|SlideSwitch|1||
+17|MAX7219CNG+|Serially Interfaced, 8-Digit LED Display Driver|X1|MAX7219|MAX7219|1||
